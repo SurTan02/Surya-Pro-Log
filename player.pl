@@ -1,3 +1,4 @@
+:- include('activity.pl').
 :- dynamic(money/1).
 :- dynamic(energy/1).
 :- dynamic(maxEnergy/1).
@@ -69,16 +70,16 @@ firstLevel :-
 
 setStat(fisherman) :-
     asserta(jobPlayer(fisherman)),
-    asserta(luck(150)),!.
+    asserta(luck(2)),!.
   
 
 setStat(rancher) :-
     asserta(jobPlayer(archer)),
-    asserta(luck(200)).
+    asserta(luck(1)).
 
 setStat(farmer) :-
     asserta(jobPlayer(sorcerer)),
-    asserta(luck(200)).
+    asserta(luck(1)).
 
 earnMoney(X):-
     money(Before),
@@ -181,7 +182,7 @@ naikLevelFishing(X) :-
     retractall(luck(_)),
 
     NewLVL is CurLvl + 1,
-    NewLuck is CurLuck*0.8,
+    NewLuck is CurLuck + 1,
 
     asserta(expFishing(0)),
     asserta(levelFishing(NewLVL)),
@@ -225,3 +226,22 @@ naikLevelFarming(X) :-
     
     format('Level Farming Anda naik menjadi ~w!', [NewLVL]),nl,
     earnEXPFarming(X).
+
+showStat :-
+    maxEnergy(MaxE),
+    (money(Money)),
+    (energy(E)),
+    (hasilPanen(Panen)),
+    (ranchCapacity(Ranch)),
+    (levelPlayer(LVLP)),
+    (expPlayer(XPplayer)),
+    (levelFishing(LVLfish)),
+    (expFishing(XPfish)),
+    (levelRanching(LVLranch)),
+    (expRanching(XPranch)),
+    (levelFarming(LVLfarm)),
+    (expFarming(XPfarm)),
+
+    format('Energi      : ~w/~w', [E,MaxE]),nl,
+    format('Uang        : ~w', [Money]),nl,
+    format('levelPlayer : ~w', [LVLP]),nl.
