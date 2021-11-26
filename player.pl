@@ -20,8 +20,8 @@ job(rancher).
 job(fisherman).
 job(farmer).
 
-% # baseExp = 100.
-% # baseEnergy = 100.
+baseExp(100).
+baseEnergy(100).
 % # expForLevelUp = 100.
 
 reset :-
@@ -43,19 +43,21 @@ reset :-
     retractall(expFarming(_)).
   
 pilihJob(_) :- jobPlayer(_), !.
-pilihJob(Job) :- setStat(Job), firstLevel.
+pilihJob(Job) :-
+                setStat(Job),
+                asserta(maxEnergy(100)),
+                firstLevel,
+                format('Anda memilih job sebagai ~w', [Job]),nl.
 
 
 
 firstLevel :-
-    energy(E),
     maxEnergy(MaxE),
-    maxEnergy(MaxE),
-    baseExp(BExp),
+    % baseExp(BExp),
     asserta(money(100)),
-    asserta(energy(E)),
+    asserta(energy(MaxE)),
     asserta(hasilPanen(1)),
-    asserta(hasilPanen(1)),
+    asserta(ranchCapacity(1)),
     asserta(levelPlayer(1)),
     asserta(expPlayer(0)),
     asserta(levelFishing(1)),
@@ -67,7 +69,7 @@ firstLevel :-
 
 setStat(fisherman) :-
     asserta(jobPlayer(fisherman)),
-    asserta(luck(150)).
+    asserta(luck(150)),!.
   
 
 setStat(rancher) :-
@@ -82,41 +84,80 @@ earnMoney(X):-
     money(Before),
     retractall(money(_)),
     After is Before + X,
-    asserta(gold(After)).
+    asserta(money(After)),
+    format('Anda mendapatkan uang sebanyak Rp.~w, Uang anda sekarang Rp.~w',[X,After]), nl.
+    
+spendMoney(X):-
+    money(Before),
+    retractall(money(_)),
+    After is Before - X,
+    asserta(money(After)),
+    format('Anda menghabiskan uang sebanyak Rp.~w, Uang anda sekarang Rp.~w',[X,After]), nl.
 
-% exp untuk level up 150
+% exp untuk level up adalah 100,200,300,400....
+earnEXPPlayer(X):-
+    expPlayer(XP),
+    levelPlayer(CurrLvl),
+    NewXP is XP + X,
+    NewXP >= (100 * (CurrLvl)) ,!,
+    Sisa is NewXP-(100 * (CurrLvl)),
+    % write([CurrLvl,XP,X,NewXP,Sisa]),
+    naikLevelPlayer(Sisa).
+    
 earnEXPPlayer(X):-
     expPlayer(XP),
     NewXP is XP + X,
-    (NewXP >= 150 -> sisa is NewXP-150, naikLevelPlayer(sisa);
-    retractall(expPlayer(_)), asserta(expPlayer(NewXP))).
+    retractall(expPlayer(_)), 
+    asserta(expPlayer(NewXP)).
+
+
+earnEXPFishing(X):-
+    expFishing(XP),
+    levelFishing(CurrLvlF),
+    NewXP is XP + X,
+    NewXP >= (100 * (CurrLvlF)), !,
+    Sisa is NewXP-(100 * (CurrLvlF)),
+    naikLevelFishing(Sisa).
+    
 
 earnEXPFishing(X):-
     expFishing(XP),
     NewXP is XP + X,
-    earnEXPPlayer(NewXP),
-    (NewXP >= 150 -> sisa is NewXP-150, naikLevelFishing(sisa);
-    retractall(expFishing(_)), asserta(expFishing(NewXP))).
+    retractall(expFishing(_)), asserta(expFishing(NewXP)).
+
+earnEXPRanching(X):-
+    expRanching(XP),
+    levelRanching(CurrLvlR),
+    
+    NewXP is XP + X,
+    NewXP >= (100 * (CurrLvlR)), !,
+    Sisa is NewXP-(100 * (CurrLvlR)),
+    naikLevelRanching(Sisa).
 
 earnEXPRanching(X):-
     expRanching(XP),
     NewXP is XP + X,
-    earnEXPPlayer(NewXP),
-    (NewXP >= 150 -> sisa is NewXP-150, naikLevelRanching(sisa);
-    retractall(expRanching(_)), asserta(expRanching(NewXP))).
+    retractall(expRanching(_)), asserta(expRanching(NewXP)).
+
+earnEXPFarming(X):-
+    expFarming(XP),
+    levelFarming(CurrLvlFa),
+    NewXP is XP + X,
+    NewXP >= (100 * (CurrLvlFa)), !,
+    Sisa is NewXP-(100 * (CurrLvlFa)),
+    naikLevelFarming(Sisa).
 
 earnEXPFarming(X):-
     expFarming(XP),
     NewXP is XP + X,
-    earnEXPPlayer(NewXP),
-    (NewXP >= 150 -> sisa is NewXP-150, naikLevelFarming(sisa);
-    retractall(expFarming(_)), asserta(expFarming(NewXP))).
+    retractall(expFarming(_)), asserta(expFarming(NewXP)).
 
 
 naikLevelPlayer(X) :-
-    level(CurLvl),
+    % write(X),nl,
+    levelPlayer(CurLvl),
     maxEnergy(CurrEnergy),
-
+    % format('LVL awal ~w', [CurLvl]),nl,
     retractall(expPlayer(_)),
     retractall(levelPlayer(_)),
     retractall(maxEnergy(_)),
@@ -124,14 +165,15 @@ naikLevelPlayer(X) :-
     NewLVL is CurLvl + 1,
     NewMaxEnergy is CurrEnergy*1.1,
 
+    asserta(expPlayer(0)),
     asserta(levelPlayer(NewLVL)),
     asserta(maxEnergy(NewMaxEnergy)),
-    write('ANDA NAIK LEVEL'),
-    (X > 150 -> X1 is X-150, earnEXPPlayer(X1)).
+    format('Level Anda naik menjadi ~w!', [NewLVL]),nl,
+    (earnEXPPlayer(X)).
 
     
 naikLevelFishing(X) :-
-    level(CurLvl),
+    levelFishing(CurLvl),
     luck(CurLuck),
 
     retractall(expFishing(_)),
@@ -141,39 +183,45 @@ naikLevelFishing(X) :-
     NewLVL is CurLvl + 1,
     NewLuck is CurLuck*0.8,
 
+    asserta(expFishing(0)),
     asserta(levelFishing(NewLVL)),
     asserta(luck(NewLuck)),
-    write('ANDA NAIK LEVEL'),
-    (X > 150 -> X1 is X-150, earnEXPFishing(X1)).
+    format('Level Fishing Anda naik menjadi ~w!', [NewLVL]),nl,
+    earnEXPFishing(X).
 
 naikLevelRanching(X) :-
-    level(CurLvl),
+    
+    levelRanching(CurLvl),
     ranchCapacity(CurCap),
-
+    
     retractall(expRanching(_)),
     retractall(levelRanching(_)),
     retractall(ranchCapacity(_)),
-
+    
     NewLVL is CurLvl + 1,
     NewCap is CurCap + 1,
 
+    asserta(expRanching(0)),
     asserta(levelRanching(NewLVL)),
     asserta(ranchCapacity(NewCap)),
-    write('ANDA NAIK LEVEL'),
-    (X > 150 -> X1 is X-150, earnEXPRanching(X1)).
+    format('Level Ranching Anda naik menjadi ~w!', [NewLVL]),nl,
+    earnEXPRanching(X).
 
 naikLevelFarming(X) :-
-    level(CurLvl),
+    
+    levelFarming(CurLvl),
     hasilPanen(CurPanen),
-
+    
     retractall(expFarming(_)),
     retractall(levelFarming(_)),
     retractall(hasilPanen(_)),
-
+    
     NewLVL is CurLvl + 1,
     NewPanen is CurPanen + 1,
-
+    
+    asserta(expFarming(0)),
     asserta(levelFarming(NewLVL)),
     asserta(hasilPanen(NewPanen)),
-    write('ANDA NAIK LEVEL'),
-    (X > 150 -> X1 is X-150, earnEXPFarming(X1)).
+    
+    format('Level Farming Anda naik menjadi ~w!', [NewLVL]),nl,
+    earnEXPFarming(X).
