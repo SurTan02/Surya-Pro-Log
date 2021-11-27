@@ -1,7 +1,7 @@
 % HOW TO TEST THIS PROGRAM
 % 1. run [map].
 % 2. run initMap.
-% 3. run main.
+% 3. run map.
 % TODO: AIR DAN DIGGED TILE
 :- dynamic(tembok/2).
 :- dynamic(tile/2).
@@ -13,6 +13,7 @@
 :- dynamic(questCoord/2).
 :- dynamic(waterCoord/2).
 :- dynamic(diggedTile/2).
+
 
 % working_directory(CWD,'C:/Users/irfan/OneDrive/Documents/Nando/Informatika/tubesLogkom/IF2121_K02_G01/src').
 % working_directory(CWD,'C:/Users/irfan/OneDrive/Documents/Nando/Informatika/tubesLogkom/Surya-Pro-Log').
@@ -60,8 +61,6 @@ marketPos(X,Y) :-
 
 % waterTile(0,_).
 waterTile(X,_) :-
-    X =:= 0.
-waterTile(X,_) :-
     X =:= 1.
 waterTile(X,_) :-
     X =:= 2.
@@ -90,6 +89,8 @@ writeElem(X,Y) :-
 
 %Rekurens penampilan peta
 writeElem(X,Y) :-
+    \+tembokAtas(X,Y),
+    \+tembokBawah(X,Y),
 	waterTile(X,Y),
 	write('o'),
 	writeElem(X+1,Y).
@@ -162,25 +163,25 @@ writeElem(X,Y) :-
 %initiator elemen
 initQuest :-
 	dimensi(A,B),
-	random(6,A,X),
+	random(7,A,X),
 	random(2,B,Y),
 	asserta(questCoord(X,Y)).
 
 initMarket :-
     dimensi(A,B),
-	random(6,A,X),
+	random(7,A,X),
 	random(2,B,Y),
 	asserta(marketCoord(X,Y)).
 
 initHouse :-
     dimensi(A,B),
-	random(6,A,X),
+	random(7,A,X),
 	random(2,B,Y),
 	asserta(houseCoord(X,Y)).
 
 initRanch :-
     dimensi(A,B),
-	random(6,A,X),
+	random(7,A,X),
 	random(2,B,Y),
 	asserta(ranchCoord(X,Y)).
 
@@ -190,12 +191,17 @@ initDimensi :-
 	random(10,15, Width),
 	asserta(dimensi(Length, Width)).
 
+initPlayerCoord :-
+    houseCoord(X,Y),
+    asserta(playerCoord(X,Y)).
+
 initMap :- 
     initDimensi,
     initQuest,
     initRanch,
     initMarket,
-    initHouse.
+    initHouse,
+    initPlayerCoord.
 writeDimensi :-
     dimensi(L,W),
     write(L),
@@ -205,15 +211,83 @@ writeDimensi :-
 
 
 legenda :-
-    write('LEGENDA'), nl, nl,
+    write('LEGENDS'), nl, nl,
     write('M\t: Marketplace'), nl,
     write('R\t: Ranch'), nl,
     write('H\t: House'), nl,
-    write('o\t: Tile Air (bisa mancing disini)'), nl,
+    write('Q\t: Quest'), nl,
+    write('o\t: Water (fish here!)'), nl,
     write('=\t: Digged Tile'), nl.
 
-main :-
+map :-
     writeDimensi,
     writeElem(0,0), nl, nl, nl,
     legenda.
+
+d :-
+    playerCoord(X,Y),
+    XNOW is X+1,
+    \+tembokKanan(XNOW,Y),
+    \+ranchPos(XNOW,Y),
+    \+questPos(XNOW,Y),
+    \+marketPos(XNOW,Y),
+    \+diggedTile(XNOW,Y),
+    retract(playerCoord(_,_)),
+    asserta(playerCoord(XNOW,Y)),
+    write('You move one step to the right'), nl.
+
+d :- 
+    playerCoord(X,Y),
+    XNOW is X+1,
+    tembokKanan(XNOW,Y),
+    write('You Hit a Wall!'), nl.
+
+w :-
+    playerCoord(X,Y),
+    YNOW is Y-1,
+    \+tembokAtas(X,YNOW),
+    \+ranchPos(X,YNOW),
+    \+questPos(X,YNOW),
+    \+marketPos(X,YNOW),
+    \+diggedTile(X,YNOW),
+    retract(playerCoord(_,_)),
+    asserta(playerCoord(X,YNOW)),
+    write('You move one step up'), nl.
+
+w :-
+    playerCoord(X,Y),
+    YNOW is Y-1,
+    tembokAtas(X,YNOW),
+    write('You Hit a Wall!'), nl.
+
+s :-
+    playerCoord(X,Y),
+    YNOW is Y+1,
+    \+tembokBawah(X,YNOW),
+    \+ranchPos(X,YNOW),
+    \+questPos(X,YNOW),
+    \+marketPos(X,YNOW),
+    \+diggedTile(X,YNOW),
+    retract(playerCoord(_,_)),
+    asserta(playerCoord(X,YNOW)),
+    write('You move one step down'), nl.
+
+s :- 
+    playerCoord(X,Y),
+    YNOW is Y+1,
+    tembokBawah(X,YNOW),
+    write('You Hit a Wall!'), nl.
+
+ a :-
+    playerCoord(X,Y),
+    XNOW is X-1,
+    \+waterTile(XNOW,Y),
+    \+ranchPos(XNOW,Y),
+    \+questPos(XNOW,Y),
+    \+marketPos(XNOW,Y),
+    \+diggedTile(XNOW,Y),
+    retract(playerCoord(_,_)),
+    asserta(playerCoord(XNOW,Y)),
+    write('You move one step to the left'), nl.   
+
     
