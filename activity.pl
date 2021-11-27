@@ -22,63 +22,84 @@ spendEnergy(X) :-
 % luck adalah Luck dari pemain, semakin tinggi maka kesempatan mendapat ikan semakin baik.
 % Kasus mendapatkan Ikan Grade Terbaik (Betutu Fish). 
 mancing :- 
-    checkEnergy(5,1),
-
+    checkEnergy(8,1),
     random(0,1000,_X),
     luck(Y),
     %fishingrod_1
+    % Z is Y + fishingrod_1
     _X < Y*15, !,
     write('Anda berhasil mendapatkan ikan kualtias Terbaik'),nl,
     % AddInventory (Ikan Betutu),
-    spendEnergy(5),
-    earnEXPFishing(20),
-    earnEXPPlayer(20).
+    spendEnergy(8),
+    earnEXPPlayer(20),
+    
+    % Level Specialty dibatasi 10
+    levelFishing(LVLfish),
+    LVLfish <10, !,
+    earnEXPFishing(20).
 
 % Kasus mendapatkan Ikan Grade Menengah (Gurame Fish). 
 mancing :-
-    checkEnergy(5,0),
+    checkEnergy(8,0),
 
     random(0,1000,_X),
     luck(Y),
+
     _X < Y*30, !,
     write('Anda berhasil mendapatkan ikan kualtias Menengah'),nl,
     % AddInventory (Ikan Gurame),
-    spendEnergy(5),
-    earnEXPFishing(15),
-    earnEXPPlayer(15).
+    spendEnergy(8),
+    earnEXPPlayer(15),
+
+    % Level Specialty dibatasi 10
+    levelFishing(LVLfish),
+    LVLfish <10, !,
+    earnEXPFishing(15).
 
 % Kasus mendapatkan Ikan Grade Rendah (Teri Fish). 
 mancing :- 
-    checkEnergy(5,0),
+    checkEnergy(8,0),
 
     random(0,1000,_X),
     luck(Y),
     _X < Y*60, !,
     write('Anda berhasil mendapatkan ikan kualtias Rendah'),nl,
     % AddInventory (Ikan Gurame),
-    spendEnergy(5),  
-    earnEXPFishing(10),
-    earnEXPPlayer(10).
+    spendEnergy(8),  
+    earnEXPPlayer(10),
+
+    % Level Specialty dibatasi 10
+    levelFishing(LVLfish),
+    LVLfish <10, !,
+    earnEXPFishing(10).
 
 % Kasus Tidak dapat ikan. 
 mancing :-
-    checkEnergy(5,0),
-
+    checkEnergy(8,0),
     write('Anda tidak mendapatkan ikan sama sekali'),nl,
-    spendEnergy(5),
-    earnEXPFishing(5),
-    earnEXPPlayer(5).
+    spendEnergy(8),
+    earnEXPPlayer(5),
 
-% mancing:- 
-%     energy(Eawal),
-%     Eakhir is Eawal - 5,
-%     (Eakhir >= 0,!, spendEnergy(Eakhir);
-%     write('Energi Anda tidak cukup untuk beraktivitas'),nl,fail,!),
-%     luck(Y),
-%     random(0,Y,_X),
-%     (  _X < Y*15 -> write('Anda berhasil mendapatkan ikan kualtias Terbaik');
-%         _X < Y*30 -> write('Anda berhasil mendapatkan ikan kualtias Menengah');
-%         _X < Y*100 -> write('Anda berhasil mendapatkan ikan kualtias Rendah');
-%         write('Anda tidak mendapatkan ikan sama sekali')). 
+    % Level Specialty dibatasi 10
+    levelFishing(LVLfish),
+    LVLfish <10, !,
+    earnEXPFishing(10).
+
+
+dig :-
+    % playerCoord(CurrPos)
+    % CurrPos = '=',!
+
+    checkEnergy(8,1),
+    spendEnergy(5),
+    earnEXPPlayer(5),
+
+    % Level Specialty dibatasi 10
+    levelFarming(LVLfarm),
+    LVLfarm <10, !,
+    earnEXPFarming(5).
+
+
+plant(X):-
     
         
