@@ -26,6 +26,7 @@ mancing :-
 
     random(0,1000,_X),
     luck(Y),
+    %fishingrod_1
     _X < Y*15, !,
     write('Anda berhasil mendapatkan ikan kualtias Terbaik'),nl,
     % AddInventory (Ikan Betutu),
@@ -52,7 +53,7 @@ mancing :-
 
     random(0,1000,_X),
     luck(Y),
-    _X < Y*100, !,
+    _X < Y*60, !,
     write('Anda berhasil mendapatkan ikan kualtias Rendah'),nl,
     % AddInventory (Ikan Gurame),
     spendEnergy(5),  

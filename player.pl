@@ -46,7 +46,7 @@ reset :-
 pilihJob(_) :- jobPlayer(_), !.
 pilihJob(Job) :-
                 setStat(Job),
-                asserta(maxEnergy(100)),
+                asserta(maxEnergy(150)),
                 firstLevel,
                 format('Anda memilih job sebagai ~w', [Job]),nl.
 
@@ -70,7 +70,7 @@ firstLevel :-
 
 setStat(fisherman) :-
     asserta(jobPlayer(fisherman)),
-    asserta(luck(2)),!.
+    asserta(luck(3)),!.
   
 
 setStat(rancher) :-
@@ -94,6 +94,22 @@ spendMoney(X):-
     After is Before - X,
     asserta(money(After)),
     format('Anda menghabiskan uang sebanyak Rp.~w, Uang anda sekarang Rp.~w',[X,After]), nl.
+
+gainEnergy(_) :-
+    energy(Eawal),
+    maxEnergy(MaxE),
+    Eawal = MaxE,
+    write('Energi Anda Masih Penuh!'),nl, !.
+
+gainEnergy(X) :-
+    energy(Eawal),
+    maxEnergy(MaxE),
+    (Eawal + X>= MaxE -> Eakhir is MaxE;
+    Eakhir is Eawal + X),
+    retractall(energy(_)),
+    asserta(energy(Eakhir)),
+    format('Energi Anda Menjadi ~w',[Eakhir]), nl.
+
 
 % exp untuk level up adalah 100,200,300,400....
 earnEXPPlayer(X):-
@@ -164,7 +180,7 @@ naikLevelPlayer(X) :-
     retractall(maxEnergy(_)),
 
     NewLVL is CurLvl + 1,
-    NewMaxEnergy is CurrEnergy*1.1,
+    NewMaxEnergy is CurrEnergy+100,
 
     asserta(expPlayer(0)),
     asserta(levelPlayer(NewLVL)),
@@ -233,6 +249,7 @@ showStat :-
     (energy(E)),
     (hasilPanen(Panen)),
     (ranchCapacity(Ranch)),
+    luck(Kehokian),
     (levelPlayer(LVLP)),
     (expPlayer(XPplayer)),
     (levelFishing(LVLfish)),
@@ -242,6 +259,23 @@ showStat :-
     (levelFarming(LVLfarm)),
     (expFarming(XPfarm)),
 
-    format('Energi      : ~w/~w', [E,MaxE]),nl,
-    format('Uang        : ~w', [Money]),nl,
-    format('levelPlayer : ~w', [LVLP]),nl.
+    XPplayerNeeded is LVLP*100,
+    XPfishNeeded is LVLfish*100,
+    XPranchNeeded is LVLranch*100,
+    XPfarmNeeded is LVLfarm*100,
+
+
+    format('Energi          : ~w/~w', [E,MaxE]),nl,
+    format('Uang            : ~w', [Money]),nl,
+    format('Level Player    : ~w', [LVLP]),nl,
+    format('EXP Player      : ~w/~w', [XPplayer,XPplayerNeeded]),nl,
+    format('EXP Fishing     : ~w/~w', [XPfish,XPfishNeeded]),nl,
+    format('EXP Ranching    : ~w/~w', [XPranch,XPranchNeeded]),nl,
+    format('EXP Farming     : ~w/~w', [XPfarm,XPfarmNeeded]),nl,
+    format('Hasil Panen     : ~w', [Panen]),nl,
+    format('Kapasitas Ranch : ~w', [Ranch]),nl,
+    format('Keberuntungan   : ~w', [Kehokian]),nl.
+
+
+
+    
