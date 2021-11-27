@@ -1,4 +1,4 @@
-:- include('activity.pl').
+% :- include('activity.pl').
 :- dynamic(money/1).
 :- dynamic(energy/1).
 :- dynamic(maxEnergy/1).
@@ -66,7 +66,7 @@ firstLevel :-
     asserta(levelRanching(1)),
     asserta(expRanching(0)),
     asserta(levelFarming(1)),
-    asserta(expFarming(0)).
+    asserta(expFarming(0)),!.
 
 setStat(fisherman) :-
     asserta(jobPlayer(fisherman)),
@@ -75,11 +75,11 @@ setStat(fisherman) :-
 
 setStat(rancher) :-
     asserta(jobPlayer(archer)),
-    asserta(luck(1)).
+    asserta(luck(1)),!.
 
 setStat(farmer) :-
     asserta(jobPlayer(sorcerer)),
-    asserta(luck(1)).
+    asserta(luck(1)),!.
 
 earnMoney(X):-
     money(Before),
