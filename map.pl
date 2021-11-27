@@ -1,137 +1,185 @@
-:- dynamic(koordinatP/2).
-:- dynamic(koordinatS/2).
-:- dynamic(koordinatQ/2).
-:- dynamic(koordinatD/2).
-:- dynamic(koordinatSlime/2).
-:- dynamic(koordinatGoblin/2).
-:- dynamic(koordinatWolf/2).
-:- dynamic(dimensi/2).
+% HOW TO TEST THIS PROGRAM
+% 1. run [map].
+% 2. run initMap.
+% 3. run main.
+% TODO: AIR DAN DIGGED TILE
 :- dynamic(tembok/2).
+:- dynamic(tile/2).
+:- dynamic(dimensi/2).
+:- dynamic(houseCoord/2).
+:- dynamic(playerCoord/2).
+:- dynamic(ranchCoord/2).
+:- dynamic(marketCoord/2).
+:- dynamic(questCoord/2).
+:- dynamic(waterCoord/2).
+:- dynamic(diggedTile/2).
 
-posisiP(X,Y) :-
-	koordinatP(A,B),
-	X =:= A,
-	Y =:= B.
+% working_directory(CWD,'C:/Users/irfan/OneDrive/Documents/Nando/Informatika/tubesLogkom/IF2121_K02_G01/src').
+% working_directory(CWD,'C:/Users/irfan/OneDrive/Documents/Nando/Informatika/tubesLogkom/Surya-Pro-Log').
 
-posisiS(X,Y) :-				/* Posisi S statik */
-	koordinatS(A,B),
-	X =:= A,
-	Y =:= B.
-
-posisiQ(X,Y) :-
-	koordinatQ(A,B),
-	X =:= A,
-	Y =:= B.
-	
-posisiD(X,Y) :-				/* Posisi D statik */
-	koordinatD(A,B),
-	X =:= A,				
-	Y =:= B.
-
-posisiSlime(X,Y) :-
-	koordinatSlime(A,B),
-	X =:= A,
-	Y =:= B.
-
-posisiGoblin(X,Y) :-
-	koordinatGoblin(A,B),
-	X =:= A,
-	Y =:= B.
-
-posisiWolf(X,Y) :-
-	koordinatWolf(A,B),
-	X =:= A,
-	Y =:= B.
-
+% pemosisian tembok
 tembokAtas(_,Y) :-
-	Y =:= 0.
-	
-tembokBawah(_,Y) :-
-	dimensi(_,B),
-	Y =:= B+1.
-	
-tembokKiri(X,_) :-
-	X =:= 0.
-	
+    Y =:= 0.
+
+tembokAtas(_,0).
+tembokBawah(_,Y) :- 
+    dimensi(_,L),
+    Y =:= L+1.
+
 tembokKanan(X,_) :-
-	dimensi(A,_),
-	X =:= A+1.
-	
-tembokTengah(X,Y) :-
-	tembok(A,B),
-	X =:= A,
-	Y =:= B.
-	
-writeC(X,Y) :-				/* Output sampai di akhir map (selesai) */
+    dimensi(P,_),
+    X =:= P+1.
+
+tembokKiri(X,_) :-
+    X =:= 0.
+
+playerPosition(X,Y) :-
+    playerCoord(A,B),
+    X =:= A,
+    Y =:= B.
+
+housePos(X,Y) :-
+    houseCoord(A,B),
+    X =:= A,
+    Y =:= B.
+
+ranchPos(X,Y) :-
+    ranchCoord(A,B),
+    X =:= A,
+    Y =:= B.
+
+marketPos(X,Y) :-
+    marketCoord(A,B),
+    X =:= A,
+    Y =:= B.
+
+ questPos(X,Y) :-
+    questCoord(A,B),
+    X =:= A,
+    Y =:= B.
+
+waterTile(1,_).
+waterTile(2,_).
+waterTile(3,_).
+waterTile(4,_).
+waterTile(5,_).
+%  diggedTile(X,Y) :-
+%     diggedCoord(A,B),
+%     X =:= A,
+%     Y =:= B.
+
+
+
+%basis rekursi	
+writeElem(X,Y) :-				
 	tembokKanan(X,Y),
 	tembokBawah(X,Y),
 	write('#').
-	
-writeC(X,Y) :-
-	posisiP(X,Y),
+
+%Rekurens penampilan peta
+writeElem(X,Y) :-
+	waterTile(X,Y),
+	write('o'),
+	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
+	playerPosition(X,Y),
 	write('P'),
-	writeC(X+1,Y).
-	
-writeC(X,Y) :-
-	posisiS(X,Y),
-	write('S'),
-	writeC(X+1,Y).
-	
-writeC(X,Y) :-
-	posisiQ(X,Y),
+	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
+	housePos(X,Y),
+	write('H'),
+	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
+	ranchPos(X,Y),
+	write('R'),
+	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
+	marketPos(X,Y),
+	write('M'),
+	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
+	questPos(X,Y),
 	write('Q'),
-	writeC(X+1,Y).
+	writeElem(X+1,Y).
 
-writeC(X,Y) :-
-	posisiD(X,Y),
-	write('D'),
-	writeC(X+1,Y).
+% writeElem(X,Y) :-
+% 	waterTile(X,Y),
+% 	write('o'),
+% 	writeElem(X+1,Y).
 
-writeC(X,Y) :-
-	posisiSlime(X,Y),
-	write('-'),
-	writeC(X+1,Y).
+% writeElem(X,Y) :-
+% 	diggedTile(X,Y),
+% 	write('='),
+% 	writeElem(X+1,Y).
 
-writeC(X,Y) :-
-	posisiGoblin(X,Y),
-	write('-'),
-	writeC(X+1,Y).
-
-writeC(X,Y) :-
-	posisiWolf(X,Y),
-	write('-'),
-	writeC(X+1,Y).
-
-writeC(X,Y) :-
-	tembokTengah(X,Y),
-	write('#'),
-	writeC(X+1,Y).
-
-writeC(X,Y) :-
+writeElem(X,Y) :-
 	tembokBawah(X,Y),
 	write('#'),
-	writeC(X+1,Y).
+	writeElem(X+1,Y).
 
-writeC(X,Y) :-
+writeElem(X,Y) :-
 	tembokKanan(X,Y),
 	write('#'), 
 	nl,
-	writeC(0,Y+1).
+	writeElem(0,Y+1).
 
-writeC(X,Y) :-
+writeElem(X,Y) :-
 	tembokAtas(X,Y),
 	write('#'),
-	writeC(X+1,Y).
+	writeElem(X+1,Y).
 
-writeC(X,Y) :-
+writeElem(X,Y) :-
 	tembokKiri(X,Y),
 	write('#'),
-	writeC(X+1,Y).
+	writeElem(X+1,Y).
 
-writeC(X,Y) :-
+% writeElem(X,Y) :-
+% 	waterTile(X,Y),
+% 	write('o'),
+% 	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
     write('-'),
-    writeC(X+1,Y).
-  
+    writeElem(X+1,Y).
+
+%initiator elemen
+initQuest :-
+	dimensi(A,B),
+	random(2,A,X),
+	random(2,B,Y),
+	asserta(questCoord(X,Y)).
+
+initMarket :-
+    dimensi(A,B),
+	random(2,A,X),
+	random(2,B,Y),
+	asserta(marketCoord(X,Y)).
+
+initHouse :-
+    dimensi(A,B),
+	random(2,A,X),
+	random(2,B,Y),
+	asserta(houseCoord(X,Y)).
+
+initRanch :-
+    dimensi(A,B),
+	random(2,A,X),
+	random(2,B,Y),
+	asserta(ranchCoord(X,Y)).
+
+    
+
+initTembok :-
+	generateTembok,
+	generateTembok,
+	generateTembok,
+	generateTembok.
+
 generateTembok :-
 	dimensi(A,B),
 	A1 is A-1,
@@ -139,111 +187,43 @@ generateTembok :-
 	random(2,A1,X),
 	random(2,B1,Y),
 	asserta(tembok(X,Y)).
-  
-initTembok :-
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok,
-	generateTembok.
-	
+
 initDimensi :-
-	random(10,20,Lebar),
-	random(10,20,Panjang),
-	asserta(dimensi(Lebar,Panjang)).
+	random(10,20, Length),
+	random(10,15, Width),
+	asserta(dimensi(Length, Width)).
 
-initStore :-
-	dimensi(A,B),
-	random(2,A,X),
-	random(2,B,Y),
-	asserta(koordinatS(X,Y)).
+initMap :- 
+    initDimensi,
+    initQuest,
+    initRanch,
+    initMarket,
+    initHouse,
+    initTembok.
 
-initQuest :-
-	dimensi(A,B),
-	random(2,A,X),
-	random(2,B,Y),
-	asserta(koordinatQ(X,Y)).
+writeDimensi :-
+    dimensi(L,W),
+    write(L),
+    nl,
+    write(W),
+    nl.
 
-initDungeon :-
-	dimensi(A,B),
-	random(2,A,X),
-	random(2,B,Y),
-	asserta(koordinatD(X,Y)).
+writeTembok :-
+    forall(tembok(X,Y),(
+    write('tembok('), write(X), write(','), write(Y), write(').'), nl
+    )),
+    !.
 
-generateSlime :-
-	dimensi(A,B),
-	A1 is A-1,
-	B1 is B-1,
-	random(2,A1,X),
-	random(2,B1,Y),
-	asserta(koordinatSlime(X,Y)).
-	
-initSlime :-
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime,
-	generateSlime.
+legenda :-
+    write('LEGENDA'), nl, nl,
+    write('M\t: Marketplace'), nl,
+    write('R\t: Ranch'), nl,
+    write('H\t: House'), nl,
+    write('o\t: Tile Air (bisa mancing disini)'), nl,
+    write('=\t: Digged Tile'), nl.
 
-
-generateGoblin :-
-	dimensi(A,B),
-	A1 is A-1,
-	B1 is B-1,
-	random(2,A1,X),
-	random(2,B1,Y),
-	asserta(koordinatGoblin(X,Y)).
-
-initGoblin :-
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin,
-	generateGoblin.
-
-generateWolf :-
-	dimensi(A,B),
-	A1 is A-1,
-	B1 is B-1,
-	random(2,A1,X),
-	random(2,B1,Y),
-	asserta(koordinatWolf(X,Y)).
-
-initWolf :-
-	generateWolf,
-	generateWolf,
-	generateWolf,
-	generateWolf.
-
-initMap :-
-	initDimensi,
-	initStore,
-	initDungeon,
-	initQuest,
-	initSlime,
-	initGoblin,
-	initWolf,
-	initTembok.
-
-randomizeEnemy :-
-	retractall(koordinatSlime(_,_)),
-	retractall(koordinatGoblin(_,_)),
-	retractall(koordinatWolf(_,_)),
-	initSlime,
-	initGoblin,
-	initWolf.
+main :-
+    writeDimensi,
+    writeElem(0,0), nl, nl, nl,
+    legenda.
+    
