@@ -112,7 +112,7 @@ menuInGame :-
      write('What do you want to do : '),nl,
      write('>>> '),
      read(Choice), nl,!,
-     call(Choice),
+     call(Choice).
 
 loadGame :-
      write('Game Loaded'),nl.    

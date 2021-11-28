@@ -70,6 +70,7 @@ writeSpecial :-
         (Day =:= 69 ; Day =:= 190) ->
         write('**SPECIAL ITEM**'), nl,
         write('- specialtiesPotion (instant Job levelup when consumed!)'), nl
+        ; !
     ).
 
 writeShovel :-

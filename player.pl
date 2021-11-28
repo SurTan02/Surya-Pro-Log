@@ -51,7 +51,7 @@ pilihJob(Job) :-
                 asserta(maxEnergy(150)),
                 firstLevel,
                 format('You choose ~w, let\'s start working', [Job]),nl,
-                %  updatePrice,
+                 updatePrice,
                 status.
 
 

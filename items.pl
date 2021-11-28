@@ -1,6 +1,6 @@
 /* Semua item yang ada
 item(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price) */
-:- dynamic(item/1).
+:- dynamic(item/8).
 
 item(1, cow, 'cow', rancher, 0, 0, 0, 2000).
 item(2, chicken, 'chicken', rancher, 0, 0, 0, 500).
