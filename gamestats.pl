@@ -1,7 +1,8 @@
 :- dynamic(day/1).
 :- dynamic(season/1).
-
-
+% :- dynamic(money/1).
+% :- include('player.pl').
+% money(10000).
 maxDay(365).
 maxMoney(20000).
 day(1).
@@ -31,7 +32,6 @@ addDay :-
 
 updateSeason :-
     day(D),
-    season(Season),
     (
         (D > 274) ->
         retractall(season(_)),
@@ -44,6 +44,17 @@ updateSeason :-
         asserta(season(summer))
         ;!
     ).
+
+checkGoalMoney :-
+    maxMoney(X),
+    money(CurrMoney),
+    \+CurrMoney >= X.
+
+checkGoalMoney :-
+    maxMoney(X),
+    money(CurrMoney),
+    CurrMoney >= X,
+    goalState.
 
 goalState :-
     write('selamat kamu menang!'), !.

@@ -50,7 +50,7 @@ pilihJob(Job) :-
                 setStat(Job),
                 asserta(maxEnergy(150)),
                 firstLevel,
-                format('You choose ~w, let\'s start working', [Job]),nl,
+                format('You choose ~w, let\'s start working', [Job]),nl, updatePrice,
                 showStat.
 
 
@@ -77,11 +77,11 @@ setStat(fisherman) :-
   
 
 setStat(rancher) :-
-    asserta(jobPlayer(archer)),
+    asserta(jobPlayer(farmer)),
     asserta(luck(1)),!.
 
 setStat(farmer) :-
-    asserta(jobPlayer(sorcerer)),
+    asserta(jobPlayer(rancher)),
     asserta(luck(1)),!.
 
 earnMoney(X):-
@@ -89,7 +89,7 @@ earnMoney(X):-
     retractall(money(_)),
     After is Before + X,
     asserta(money(After)),
-    format('You just gained ~w gold, you have ~w gold',[X,After]), nl.
+    format('You just gained ~w gold, you have ~w gold',[X,After]), nl, nl, checkGoalMoney,nl.
     
 spendMoney(X):-
     money(Before),
