@@ -180,7 +180,7 @@ sell(StringName, N) :-
     isInMarket(_),
     myInventory(ID,_, StringName,_,_,_,_,Price,_),
 
-    deleteNtimes(N,ID),
+    deleteNItems(N,ID),
     money(Money),
     TotalPrice is N*Price,
     NowMoney is Money + TotalPrice,

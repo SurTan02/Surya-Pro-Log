@@ -13,11 +13,11 @@ item(7, cheese, 'cheese', commodity, 7, 0, 0, 60).
 item(8, mayonnaise, 'mayonnaise', commodity, 3, 0, 0, 15).
 item(9, sweater, 'sweater', commodity, 5, 0, 0, 30).
 
-item(10, carrot_seed, 'carrot seed', commodity, 1, 150, 0, 5).
-item(11, potato_seed, 'potato seed', commodity, 1, 175, 0, 7).
-item(12, corn_seed, 'corn seed', commodity, 1, 450, 0, 9).
-item(13, tomato_seed, 'tomato seed', commodity, 2, 800, 0, 12).
-item(14, pumpkin_seed, 'pumpkin seed', commodity, 3, 1000, 0, 15).
+item(10, carrot_seed, 'carrot seed', commodity, 1, 0, 0, 5).
+item(11, potato_seed, 'potato seed', commodity, 1, 0, 0, 7).
+item(12, corn_seed, 'corn seed', commodity, 1, 0, 0, 9).
+item(13, tomato_seed, 'tomato seed', commodity, 2, 0, 0, 12).
+item(14, pumpkin_seed, 'pumpkin seed', commodity, 3, 0, 0, 15).
 
 item(15, carrot, 'carrot', commodity, 0, 150, 0, 10).
 item(16, potato, 'potato', commodity, 0, 175, 0, 14).
