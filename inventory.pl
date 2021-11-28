@@ -3,7 +3,7 @@
 % :- include('items.pl').
 % % myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count).
 
-% % FOR DEBUGGING PURPOSES
+% FOR DEBUGGING PURPOSES
 % myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
 % myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
 % myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
@@ -63,6 +63,12 @@ deleteNtimes(N, ID) :-
 cekJumlahInventory(Sum):-
     findall(Count, myInventory(_,_,_,_,_,_,_,_, Count), List),
     sum_list(List, Sum).
+
+% CEK APAKAH ITEM ADA DI INVENTORY
+% Caranya: insideMyInventory('carrot seed').
+insideMyInventory(StrName) :-
+    findall(String_Name, myInventory(_,_,String_Name,_,_,_,_,_,_), String_Name_List),
+    isInInventory(StrName, String_Name_List), !.
 
 isInInventory(ID,[ID|_]).
 isInInventory(ID,[_|T]) :- isInInventory(ID,T).
