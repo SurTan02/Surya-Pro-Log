@@ -161,9 +161,21 @@ checkProduce(X) :-
     findall(Energy, chicken(Energy,_), ListChickenEnergy),
     findall(Energy, cow(Energy,_), ListCowEnergy),
     findall(Energy, sheep(Energy,_), ListSheepEnergy),
-    checkCowProduction(ListCowEnergy,X,1),
-    checkSheepProduction(ListSheepEnergy,X,1),
-    checkChickenProduction(ListChickenEnergy,X,1).
+    valCow(VCow),
+    valChicken(VChick),
+    valSheep(VSheep),
+    (
+        VCow = 0 -> write('No Cows'),nl;
+        checkCowProduction(ListCowEnergy,X,1)
+    ),
+    (
+        VChick = 0 -> write('No Chicken'),nl;
+        checkChickenProduction(ListChickenEnergy,X,1)
+    ),
+    (
+        VSheep = 0 -> write('No Sheep'),nl;
+        checkSheepProduction(ListSheepEnergy,X,1)
+    ).
     
 
 
