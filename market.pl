@@ -158,7 +158,10 @@ buy(StringName, N) :-
     NowMoney is Money-TotalPrice,
     write(StringName), write(' succesfully purchased'), nl, write(N), write('x '),
     write(StringName), write(' is succesfully added to your inventory'),nl,
-    write('Current Money: '), write(NowMoney), write(' gold.'),nl,!.
+    write('Current Money: '), write(NowMoney), write(' gold.'),
+    retract(money(Money)),
+    asserta(money(NowMoney)),
+    nl,!.
 
 sell(_,_) :-
     \+isInMarket(_),
@@ -182,4 +185,7 @@ sell(StringName, N) :-
     TotalPrice is N*Price,
     NowMoney is Money + TotalPrice,
     write('You sold '), write(N), write(' '), write(StringName), nl,
-    write('You received '), write(NowMoney), write(' gold.'),nl,!.
+    write('You received '), write(NowMoney), write(' gold.'),
+    retract(money(Money)),
+    asserta(money(NowMoney)),
+    nl,!.
