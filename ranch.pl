@@ -123,9 +123,10 @@ incCow(X) :-
     RES is A+X,
     retractall(valCow(_)),
     asserta(valCow(RES)),
-    retractall(cowID(ID)),
+    cowID(ID),
     assertz(cow(1000,ID)),
     NewID is ID + 1,
+    retractall(cowID(_)),
     asserta(cowID(NewID)).
 
 incSheep(X) :-
@@ -133,9 +134,10 @@ incSheep(X) :-
     RES is A+X,
     retractall(valSheep(_)),
     asserta(valSheep(RES)),
-    retractall(sheepID(ID)),
+    sheepID(ID),
     assertz(sheep(600,ID)),
     NewID is ID + 1,
+    retractall(sheepID(_)),
     asserta(sheepID(NewID)).
 
 
@@ -144,9 +146,10 @@ incChicken(X) :-
     RES is A+X,
     retractall(valChicken(_)),
     asserta(valChicken(RES)),
-    retractall(chickenID(ID)),
+    chickenID(ID),
     assertz(chicken(300,ID)),
     NewID is ID + 1,
+    retractall(chickenID(_)),
     asserta(chickenID(NewID)).
 
 %everytime energies are spent, call this to update
