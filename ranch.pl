@@ -161,6 +161,7 @@ checkProduce(X) :-
 
 
 % increase produce every X spend energy
+checkCowProduction([],X,0).
 checkCowProduction([H],X,ID) :- cowID(B), B is B-1, B = ID,
     Left is H-X,
     (
@@ -177,7 +178,7 @@ checkCowProduction([H|T],X,ID) :-
     NextID is ID+1,
     checkCowProduction(T,X,NextID).
 
-
+checkSheepProduction([],X,0).
 checkSheepProduction([H],X,ID) :- sheepID(B), B is B-1, B = ID,
     Left is H-X,
     (
@@ -194,6 +195,7 @@ checkSheepProduction([H|T],X,ID) :-
     NextID is ID+1,
     checkSheepProduction(T,X,NextID).
 
+checkChickenProduction([],X,0).
 checkChickenProduction([H],X,ID) :- chickenID(B), B is B-1, B = ID,
     Left is H-X,
     (
