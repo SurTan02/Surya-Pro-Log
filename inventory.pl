@@ -9,6 +9,8 @@
 % myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
 % myInventory(23, energy_drink, 'energyDrink', consumable, 0, 0, 50, 20, 3).
 
+myInventory(26, shovel, 'level 1 shovel', equipment, 1, 0, 0, 50, 1).
+myInventory(29, fishingrod, 'level 1 fishing rod', equipment, 1, 0, 0, 50, 1).
 
 maxInventory(100).
 

@@ -47,7 +47,7 @@ market :-
         read(ItemName), nl,
         write('How much did you want to buy?'), nl,
         read(AmountItem), nl, 
-        buy(ItemName, AmountItem), nl, fail
+        buy(ItemName, AmountItem), nl,!, fail
     ; (X =:= 2) -> 
         inventory, nl,
         write('Write the name of the item that you want to buy'), nl,
@@ -63,7 +63,7 @@ market :-
         ;   write('You don\'t have that item in your inventory'), nl, fail
         )
     ;  write('Terimakasih sudah mengunjungi Store! :D'),nl,
-        retract(isStore(_)),!
+        retract(isInMarket(_)),!
     ). 
 
 writeShovel :-
@@ -138,8 +138,8 @@ buy(StringName,N) :-
     item(_, _, StringName,_,_,_,_, Price),
     TotalPrice is Price * N,
     Money < TotalPrice,
-    write('Insufficient fund!'), write(StringName), nl,
-    write('Ganbatte!'),nl,!,fail.
+    write('Insufficient fund!'), nl,
+    write('Ganbatte!'),nl,nl,nl,!,fail.
 
 buy(_,N) :-
     isInMarket(_),
