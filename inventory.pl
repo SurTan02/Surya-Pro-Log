@@ -7,6 +7,7 @@
 myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
 myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
 myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
+myInventory(23, energy_drink, 'energyDrink', consumable, 0, 0, 50, 20, 3).
 
 
 maxInventory(100).
@@ -87,7 +88,7 @@ isFull :-
     cekJumlahInventory(Sum),
     Sum == 100.
 
-makeListInventory(String_Name_List, TypeList, CountList,) :-
+makeListInventory(String_Name_List, TypeList, CountList) :-
     findall(String_Name, myInventory(_,_, String_Name,_,_,_,_,_,_), String_Name_List),
     findall(Type, myInventory(_,_,_,Type,_,_,_,_,_), TypeList),
     findall(Count, myInventory(_,_,_,_,_,_,_,_,Count), CountList).
@@ -95,24 +96,64 @@ makeListInventory(String_Name_List, TypeList, CountList,) :-
 writeInventory([], [], []).
 writeInventory([A|V], [B|W], [C|X]) :-
     (
-        (B =:= counsumable) ->
+        (B == consumable) ->
+        write('\t'),
         write(C), write(' '), write(A), write(' ('), write(B), write(')'), nl,
         writeInventory(V,W,X)
-    ;   write(C), write(' '), write(A), nl,
+    ;   write('\t'), write(C), write(' '), write(A), nl,
         writeInventory(V,W,X)
     ).
-
-
-
-
     
 inventory :-
-    cekJumlahInventory(X),
-    write('Your Inventory ('), write(X), write('/100)'), nl,nl,
-    makeListInventory(String_Name_List, CountList),
-    writeInventory(String_Name_List, CountList),
-    write('write consumable name to use it'), nl
-    write('example: energyDrink to use energyDrink').
+    cekJumlahInventory(X), nl,
+    write('\tYour Inventory ('), write(X), write('/100)'), nl,nl,
+    makeListInventory(String_Name_List, TypeList, CountList),
+    writeInventory(String_Name_List, TypeList, CountList),nl,
+    write('\twrite consumable name to use it'), nl,
+    write('\texample: energyDrink to use energyDrink').
 
 energyDrink :-
-    
+    \+insideMyInventory('energyDrink'),
+    write('You don\'t have any  energy drink in your inventory'), nl,
+    !, fail.
+energyDrink :-
+    useConsumables('energyDrink'),!,fail.
+
+coffeBTS :-
+    \+insideMyInventory('coffeBTS'),
+    write('You don\'t have any coffeBTS in your inventory'), nl,
+    !, fail.
+coffeBTS :-
+    useConsumables('coffeBTS'),!,fail.
+
+useConsumables(String_Name) :-
+    insideMyInventory(String_Name),
+    myInventory(ID,_, String_Name,_,_,_, EnergySupply, _,_),
+    gainEnergy(EnergySupply),
+    deleteFromInventory(ID),!,fail.
+
+specialtiesPotion :-
+    \+insideMyInventory('specialtiesPotion'),
+    write('You don\'t have any specialtiesPotion in your inventory'), nl,
+    !, fail.
+
+specialtiesPotion :-
+    insideMyInventory('specialtiesPotion'),
+    jobPlayer(Job),
+    (
+        (Job == fisherman) ->
+        levelFishing(LvlFish),
+        X is 100 * LvlFish,
+        earnEXPFishing(X)
+
+    ;   (Job == rancher) ->
+        levelRanching(LvlRanch),
+        X is 100* LvlRanch,
+        earnEXPRanching(X)
+
+    ;   (Job == farmer) ->
+        levelFarming(LvlFarming),
+        X is 100*LvlFarming,
+        earnEXPFarming(X)
+    ).
+

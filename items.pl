@@ -31,7 +31,7 @@ item(22, teri_fish, 'teri fish', commodity, 0, 0, 0, 5).
 
 item(23, energy_drink, 'energyDrink', consumable, 0, 0, 50, 20).
 item(24, coffee_bts, 'coffeeBTS', consumable, 0, 0, 75, 30).
-item(25, pupuk_mbah_subur, 'pupukMbahSubur', consumable, 0, 0, 0, 1000).
+item(25, specialties_potion, 'specialtiesPotion', consumable, 0, 0, 0, 1000).
 
 item(26, shovel, 'level 1 shovel', equipment, 1, 0, 0, 50).
 item(27, shovel, 'level 2 shovel', equipment, 2, 0, 0, 100).

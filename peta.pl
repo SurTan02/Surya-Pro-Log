@@ -211,11 +211,17 @@ writeDimensi :-
 
 
 legenda :-
-    write('LEGENDS'), nl, nl,
-    write('M\t: Marketplace'), nl,
-    write('R\t: Ranch'), nl,
-    write('H\t: House'), nl,
-    write('Q\t: Quest'), nl,
+    marketCoord(A,B),
+    questCoord(C,D),
+    ranchCoord(E,F),
+    houseCoord(G,H),
+    playerCoord(I,J),
+    write('LEGENDS\t\t(X,Y)'), nl, nl,
+    write('M\t: Marketplace\t('), write(A), write(','), write(B), write(')'), nl,
+    write('P\t: You\t('), write(I), write(','), write(J), write(')'), nl,
+    write('R\t: Ranch\t('), write(E), write(','), write(F), write(')'), nl,
+    write('H\t: House\t('), write(G), write(','), write(H), write(')'), nl,
+    write('Q\t: Quest\t('), write(C), write(','), write(D), write(')'), nl,
     write('o\t: Water (fish here!)'), nl,
     write('=\t: Digged Tile'), nl,!.
 
@@ -223,3 +229,39 @@ map :-
     writeDimensi,
     writeElem(0,0), nl, nl, nl,
     legenda,!.
+
+teleport(X,Y):-
+	\+tembokBawah(X,Y),
+	\+tembokAtas(X,Y),
+	\+tembokKiri(X,Y),
+	\+tembokKanan(X,Y),
+	\+tembokTengah(X,Y),
+    \+waterTile(X,Y),
+    retract(playerCoord(_,_)),
+    asserta(playerCoord(X,Y)),
+    write('Teleportation succesful!'), nl,
+    write('You are now at ('), write(X), write(','), write(Y), write(')'), nl, !.
+
+teleport(X,Y) :-
+	marketPos(X,Y),
+	retract(playerCoord(_,_)),
+	asserta(playerCoord(X,Y)),
+	write('Teleportation succesful!'), nl,
+	write('You are now at the market.'), nl,
+	write('Type market to access market'),nl,!.
+
+teleport(X,Y) :-
+	ranchPos(X,Y),
+	retract(playerCoord(_,_)),
+	asserta(playerCoord(X,Y)),
+	write('Teleportation succesful!'), nl,
+	write('You are now at the ranch.'), nl,
+	write('Type ranch to access ranch'),nl,!.
+
+teleport(X,Y) :-
+	questPos(X,Y),
+	retract(playerCoord(_,_)),
+	asserta(playerCoord(X,Y)),
+	write('Teleportation succesful!'), nl,
+	write('You are now at the Quest spot.'), nl,
+	write('Type quest to access quest'),nl,!.
