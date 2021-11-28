@@ -1,12 +1,12 @@
 :- dynamic(myInventory/9).
 
-% :- include('items.pl').
-% % myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count).
+:- include('items.pl').
+% myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count).
 
 % FOR DEBUGGING PURPOSES
-% myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
-% myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
-% myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
+myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
+myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
+myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
 
 
 maxInventory(100).
@@ -37,22 +37,32 @@ addNtimes(N, ID) :-
     addNtimes(S, ID), !.
 
 deleteFromInventory(ID) :-
+    item(ID, Name,_,_,_,_,_,_),
+    myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count),
+    NewCount is Count-1,
+    (
+        (NewCount >= 1) ->
+        retract(myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count)),
+        assertz(myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, NewCount))
+    ;   retract(myInventory(ID, Name, String_Name, Type,    Level, EnergyNeed, EnergySupply, Price, Count))
+
+    ).
+
+
+ deleteNItems(N, ID) :-
     findall(InvID, myInventory(InvID,_,_,_,_,_,_,_,_), ListID),
-    (   isInInventory(ID, ListID) -> %jikka ada di inventory
-        item(ID, Name,_,_,_,_,_,_),
-        myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count),
-        NewCount is Count-1,
+    (
+        isInInventory(ID, ListID) ->
+        myInventory(ID,_,_,_,_,_,_,_,Count),
+        NewCount is Count-N,
         (
-            NewCount >= 1 ->
-            retract(myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count)),
-            assertz(myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, NewCount))
-        ;   retract(myInventory(ID, Name, String_Name, Type,    Level, EnergyNeed, EnergySupply, Price, Count))
-
-
-
+            (NewCount < 0) ->
+            write('You don\'t have that much item in your inventory'), nl, fail
+        ;   deleteNtimes(N,ID)
         )
-    ;   write('You dont have that item on your inventory')
-    ).      
+    ;   write('you don\'t have that item in your inventory'), nl, fail
+    ).
+    
 
 deleteNtimes(0,_).
 deleteNtimes(N, ID) :-
@@ -77,14 +87,21 @@ isFull :-
     cekJumlahInventory(Sum),
     Sum == 100.
 
-makeListInventory(String_Name_List, CountList) :-
+makeListInventory(String_Name_List, TypeList, CountList,) :-
     findall(String_Name, myInventory(_,_, String_Name,_,_,_,_,_,_), String_Name_List),
+    findall(Type, myInventory(_,_,_,Type,_,_,_,_,_), TypeList),
     findall(Count, myInventory(_,_,_,_,_,_,_,_,Count), CountList).
 
-writeInventory([], []).
-writeInventory([A|V], [B|W]) :-
-        write(B), write(' '), write(A), nl,
-        writeInventory(V,W).
+writeInventory([], [], []).
+writeInventory([A|V], [B|W], [C|X]) :-
+    (
+        (B =:= counsumable) ->
+        write(C), write(' '), write(A), write(' ('), write(B), write(')'), nl,
+        writeInventory(V,W,X)
+    ;   write(C), write(' '), write(A), nl,
+        writeInventory(V,W,X)
+    ).
+
 
 
 
@@ -93,4 +110,9 @@ inventory :-
     cekJumlahInventory(X),
     write('Your Inventory ('), write(X), write('/100)'), nl,nl,
     makeListInventory(String_Name_List, CountList),
-    writeInventory(String_Name_List, CountList).
+    writeInventory(String_Name_List, CountList),
+    write('write consumable name to use it'), nl
+    write('example: energyDrink to use energyDrink').
+
+energyDrink :-
+    
