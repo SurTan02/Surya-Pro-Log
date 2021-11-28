@@ -14,6 +14,9 @@
 :- dynamic(chickenID/1). %next id ke berapa ya ???
 :- dynamic(cowID/1).
 :- dynamic(sheepID/1).
+:- dynamic(cowEN/1).
+:- dynamic(sheepEN/1).
+:- dynamic(chickenEN/1).
 
 
 initRanchVal :-
@@ -25,7 +28,10 @@ initRanchVal :-
     asserta(woolVal(0)),
     asserta(chickenID(1)),
     asserta(cowID(1)),
-    asserta(sheepID(1)).
+    asserta(sheepID(1)),
+    asserta(cowEN(1000)),
+    asserta(sheepEN(600)),
+    asserta(chickenEN(300)).
 
 
 resetRanchVal :-
@@ -105,20 +111,23 @@ getCowProduce :-
 
 incEgg(X) :-
     eggVal(A),
-    RES is A+X,
+    valChicken(B),
+    RES is A+(X*B),
     retractall(eggVal(_)),
     asserta(eggVal(RES)).
 
 
 incMilk(X) :-
     milkVal(A),
-    RES is A+X,
+    valCow(B),
+    RES is A+(X*B),
     retractall(milkVal(_)),
     asserta(milkVal(RES)).
 
 incWool(X) :-
     woolVal(A),
-    RES is A+X,
+    valSheep(B),
+    RES is A+(X*B),
     retractall(woolVal(_)),
     asserta(woolVal(RES)).
 
@@ -158,75 +167,45 @@ incChicken(X) :-
 
 %everytime energies are spent, call this to update
 checkRanchProduce(X) :-
-    findall(Energy, chicken(Energy,_), ListChickenEnergy),
-    findall(Energy, cow(Energy,_), ListCowEnergy),
-    findall(Energy, sheep(Energy,_), ListSheepEnergy),
     valCow(VCow),
     valChicken(VChick),
     valSheep(VSheep),
+    cowEN(CowEN),
+    sheepEN(SheepEN),
+    chickenEN(ChickenEN),
     (
         VCow = 0 -> write('No Cows'),nl;
-        checkCowProduction(ListCowEnergy,X,1)
+        VCow > 0 -> checkCowProduction(CowEN,X,1)
     ),
     (
         VChick = 0 -> write('No Chicken'),nl;
-        checkChickenProduction(ListChickenEnergy,X,1)
+        VChick > 0 -> checkChickenProduction(ChickenEN,X,1)
     ),
     (
         VSheep = 0 -> write('No Sheep'),nl;
-        checkSheepProduction(ListSheepEnergy,X,1)
+        VSheep > 0 -> checkSheepProduction(SheepEN,X,1), write('masuk sini')
     ).
     
 
 
 % increase produce every X spend energy
-checkCowProduction([],_,0).
-checkCowProduction([H],X,ID) :- cowID(B), B is B-1, B = ID,
+checkCowProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), incMilk(1)
+        (Left =< 0), incMilk(1);!
     ),
-    retract(cow(_,ID)), EN is mod(Left,1000), assertz(cow(EN,ID)).
+    EN is mod(Left,1000), retractall(cowEN(_)), asserta(cowEN(EN)).
 
-checkCowProduction([H|T],X,ID) :-
+checkSheepProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), incMilk(1)
+        (Left =< 0), incWool(1);!
     ),
-    retract(cow(_,ID)), EN is mod(Left,1000), assertz(cow(EN,ID)).
-    NextID is ID+1,
-    checkCowProduction(T,X,NextID).
+    EN is mod(Left,600), retractall(sheepEN(_)), asserta(sheepEN(EN)).
 
-checkSheepProduction([],X,0).
-checkSheepProduction([H],X,ID) :- sheepID(B), B is B-1, B = ID,
+checkChickenProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), incWool(1)
+        (Left =< 0), incEgg(1);!
     ),
-    retract(sheep(_,ID)), EN is mod(Left,1000), assertz(sheep(EN,ID)).
-
-checkSheepProduction([H|T],X,ID) :-
-    Left is H-X,
-    (
-        (Left =< 0), incWool(1)
-    ),
-    retract(sheep(_,ID)), EN is mod(Left,1000), assertz(sheep(EN,ID)).
-    NextID is ID+1,
-    checkSheepProduction(T,X,NextID).
-
-checkChickenProduction([],X,0).
-checkChickenProduction([H],X,ID) :- chickenID(B), B is B-1, B = ID,
-    Left is H-X,
-    (
-        (Left =< 0), incEgg(1)
-    ),
-    retract(chicken(_,ID)), EN is mod(Left,1000), assertz(chicken(EN,ID)).
-
-checkChickenProduction([H|T],X,ID) :-
-    Left is H-X,
-    (
-        (Left =< 0), incEgg(1)
-    ),
-    retract(chicken(_,ID)),  EN is mod(Left,1000), assertz(chicken(EN,ID)).
-    NextID is ID+1,
-    checkChickenProduction(T,X,NextID).
+    EN is mod(Left,300), retractall(chickenEN(_)), asserta(chickenEN(EN)).
