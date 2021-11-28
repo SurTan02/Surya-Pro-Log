@@ -19,6 +19,7 @@ buat_quest(Tuple) :-
 	appendList(Tuple,Quest,NewQuest),
 	asserta(available_quest(NewQuest)).
 post_quest :- 
+   asserta(current_quest(999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999)),
    buat_quest([3,0,3,0,0,0,3,3,3,0,0,3,0,0,100,100,'Desa ini harus kuat imun-nya! Mari makan makanan 4 sehat 5 sempurna :D']),
    buat_quest([0,0,0,0,0,0,5,5,5,3,2,0,0,0,125,125,'Eat... Your... Vegetableeeee!! - Seorang guru vegan']),
    buat_quest([7,0,5,0,0,0,7,7,7,3,0,7,0,0,145,145,'Desa sebelah terkena musibah banjir, kita harus beri mereka bantuan!']),
@@ -47,15 +48,15 @@ display_quest :-
 
 /* COMMAND QUEST */
 /* Player tidak sedang berada di tile Quest */
-/* Di komen-in dlu biar gampang debug
+
 quest :-
 	playerCoord(X,Y),
    \+questCoord(X,Y),
-   write('Papan Quest Desa (Q) bukan di sini!\n'),!,fail.*/
+   write('Papan Quest Desa (Q) bukan di sini!\n'),!,fail.
 
 /* Masih ada current_quest */
 quest :-
-	current_quest(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_),!,
+	\+current_quest(999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999),!,
 	write('Kamu masih punya Quest yang sedang berlangsung! Ngerjainnya mesti satu-satu atuh.\n').
 
 /* Semua quest sudah diambil */
@@ -81,6 +82,7 @@ quest :-
 		asserta(available_quest(NewQuestList)),
 
       /* Set quest menjadi current_quest */
+	    retractall(current_quest(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)),
 		asserta(current_quest(Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des)),
       format('Kamu mengambil Quest nomor ~d! Good Luck!\n\n',[Query]),
 		write('Kamu keluar dari Papan Quest Desa.\n'),
@@ -101,7 +103,8 @@ quest_rewarding :-
    earnEXPPlayer(Exp),
    format('Anda mendapat ~d EXP\n',[Exp]),
 	earnMoney(Gld),
-	retractall(current_quest(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)),!.
+	retractall(current_quest(_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)),
+	asserta(current_quest(999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999)),!.
 
 /* Apakah current_quest sudah selesai atau belum */
 is_quest_done :-
@@ -216,6 +219,15 @@ update_quest(ID) :-
 	)),
    is_quest_done,!.
 update_quest(_).
+
+stat_quest :-
+	current_quest(999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999),
+	write('Quest Progress  : You are currently not doing any Quest.\n\n').
+stat_quest :-
+	\+current_quest(999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999,999),
+	current_quest(Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des),
+	format('Quest Progress  : ~d Egg, ~d Wool, ~d Milk, ~d Mayonnaise, ~d Sweater, ~d Cheese\n                  ~d Carrot, ~d Potato, ~d Corn, ~d Tomato, ~d Pumpkin\n                  ~d Ikan Teri, ~d Ikan Gurame, ~d Ikan Betutu\n\n',[Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu]).
+
 
 /*####################################################################################################*/
 

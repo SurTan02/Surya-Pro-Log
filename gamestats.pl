@@ -26,7 +26,7 @@ addDay :-
 
         )
     ;   retract(day(D)),
-        asserta(day(NextDay)), fail
+        asserta(day(NextDay))
     ).
 
 updateSeason :-
@@ -42,6 +42,7 @@ updateSeason :-
     ;   (D > 92) ->
         retractall(season(_)),
         asserta(season(summer))
+        ;!
     ).
 
 goalState :-

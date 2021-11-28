@@ -16,7 +16,7 @@ spendEnergy(X) :-
     retractall(energy(_)),
     asserta(energy(Eakhir)),
     % format('Your energy ~w',[Eakhir]), nl,
-    Eakhir =< 0 -> write('You have run out of energy and magically sleep in your house'), sleep.
+    (Eakhir =< 0 -> write('You have run out of energy and magically sleep in your house'), forceSleep;!).
 
     
 % _X adalah Bilangan Random untuk menentukan ikan yang didapatkan

@@ -14,7 +14,7 @@ house :-
     write('\t- sleep'), nl,
     write('\t- writeDiary'), nl,
     write('\t- readDiary'), nl,
-    write('\t- exit (use exitHouse command)'), nl, fail.
+    write('\t- exit (use exitHouse command)'), nl, !, fail.
 
 sleep :-
     \+isInHouse(_),
