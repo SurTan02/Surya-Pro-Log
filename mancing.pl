@@ -16,6 +16,7 @@ spendEnergy(X) :-
     retractall(energy(_)),
     asserta(energy(Eakhir)),
     checkRanchProduce(X),
+    checkFarmProduce(X),
     % format('Your energy ~w',[Eakhir]), nl,
     (Eakhir =< 0 -> write('You have run out of energy and magically sleep in your house'), forceSleep;!).
 

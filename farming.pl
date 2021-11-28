@@ -36,11 +36,11 @@ initFarming :-
     asserta(valTomato(0)),
     asserta(valPumpkin(0)),
     
-    asserta(valCarrotEN(150)),
-    asserta(valCornEN(450)),
-    asserta(valPotatoEN(175)),
-    asserta(valTomatoEN(800)),
-    asserta(valPumpkinEN(1000)),
+    asserta(carrotEN(150)),
+    asserta(cornEN(450)),
+    asserta(potatoEN(175)),
+    asserta(tomatoEN(800)),
+    asserta(pumpkinEN(1000)),
 
     asserta(valCar(0)),
     asserta(valCor(0)),
@@ -95,6 +95,7 @@ dig :-
 
 plant :-
     updateFromInventory,
+    playerCoord(X,Y),
     (
         diggedTile(X,Y) ->
             write('You have:'),nl,
@@ -103,11 +104,11 @@ plant :-
             valPotatoSeed(CurrPot),
             valTomatoSeed(CurrTom),
             valPumpkinSeed(CurrPump),
-            write(CurrCar), write(' carrot seed'),
-            write(CurrCor), write(' corn seed'),
-            write(CurPot), write(' potato seed'),
-            write(CurTom), write(' tomato seed'),
-            write(CurPump), write(' pumpkin seed'),
+            write(CurrCar), write(' carrot seed'),nl,
+            write(CurrCor), write(' corn seed'),nl,
+            write(CurPot), write(' potato seed'),nl,
+            write(CurTom), write(' tomato seed'),nl,
+            write(CurPump), write(' pumpkin seed'),nl,
             write('What do you want to plant?'),nl,
             read(Choice),
             (
@@ -226,11 +227,11 @@ harvest :-
     valTomato(VTom),
     valPumpkinSeed(VPump),
     write('You have : '),nl,
-    write(VCar), ' carrot plant',nl,
-    write(VCor), ' corn plant',nl,
-    write(VPot), ' potato plant',nl,
-    write(VTom), ' tomato plant',nl,
-    write(VPump), ' pumpkin plant',nl,
+    write(VCar), write(' carrot plant'),nl,
+    write(VCor),write(' corn plant'),nl,
+    write(VPot),write(' potato plant'),nl,
+    write(VTom), write(' tomato plant'),nl,
+    write(VPump), write(' pumpkin plant'),nl,
 
     write('Which plant do you want to harvest?'),!,nl,
     read(Choice),nl,!,
@@ -243,7 +244,7 @@ harvest :-
     ).
 
 getCarrotProduce :-
-    valCarrot(A),
+    valCar(A),
     (
     A = 0 -> write('Your carrot plant has not produce any carrot.'),nl,write('Please check again later.');
     
@@ -254,11 +255,11 @@ getCarrotProduce :-
     earnEXPPlayer(50),
     addNtimes(A, 15)
     ),
-    retractall(valCarrot(_)),
-    asserta(valCarrot(0)).
+    retractall(valCar(_)),
+    asserta(valCar(0)).
 
 getPotatoProduce :-
-    valPotato(A),
+    valPot(A),
     (
     A = 0 -> write('Your potato plant has not produce any potato.'),nl,write('Please check again later.');
     
@@ -269,11 +270,11 @@ getPotatoProduce :-
     earnEXPPlayer(50),
     addNtimes(A, 16)
     ),
-    retractall(valPotato(_)),
-    asserta(valPotato(0)).
+    retractall(valPot(_)),
+    asserta(valPot(0)).
 
 getCornProduce :-
-    valCorn(A),
+    valCor(A),
     (
     A = 0 -> write('Your corn plant has not produce any corn.'),nl,write('Please check again later.');
     
@@ -284,11 +285,11 @@ getCornProduce :-
     earnEXPPlayer(50),
     addNtimes(A, 17)
     ),
-    retractall(valCorn(_)),
-    asserta(valCorn(0)).
+    retractall(valCor(_)),
+    asserta(valCor(0)).
 
 getTomatoProduce :-
-    valTomato(A),
+    valTom(A),
     (
     A = 0 -> write('Your tomato plant has not produce any tomato.'),nl,write('Please check again later.');
     
@@ -299,11 +300,11 @@ getTomatoProduce :-
     earnEXPPlayer(50),
     addNtimes(A, 18)
     ),
-    retractall(valTomato(_)),
-    asserta(valTomato(0)).
+    retractall(valTom(_)),
+    asserta(valTom(0)).
 
 getPumpkinProduce :-
-    valTomato(A),
+    valPump(A),
     (
     A = 0 -> write('Your pumpkin plant has not produce any pumpkin.'),nl,write('Please check again later.');
     
@@ -314,8 +315,8 @@ getPumpkinProduce :-
     earnEXPPlayer(50),
     addNtimes(A, 19)
     ),
-    retractall(valPumpkin(_)),
-    asserta(valPumpkin(0)).
+    retractall(valPump(_)),
+    asserta(valPump(0)).
 
 
 %everytime energies are spent, call this to update
@@ -402,9 +403,9 @@ checkCarrotProduction(H,X,ID) :-
 checkCornProduction(H,X,ID) :- 
     Left is H-X,
     (
-        Left = 0, EN is 150, incCorn(1);
-        Left < 0, EN is mod(Left,150),incCorn(1);
-        Left > 0, EN is mod(Left,150)
+        Left = 0, EN is 450, incCorn(1);
+        Left < 0, EN is mod(Left,450),incCorn(1);
+        Left > 0, EN is mod(Left,450)
     ),
     retractall(cornEN(_)), asserta(cornEN(EN)).
 
