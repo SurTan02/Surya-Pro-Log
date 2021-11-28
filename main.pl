@@ -8,6 +8,21 @@
 
 
 :- dynamic(state/1).
+:- dynamic(day/1).
+
+sleep :-
+     houseCoord(X,Y),
+     retractall(playerCoord(_,_)),
+     asserta(playerCoord(X,Y)),
+
+
+     maxEnergy(MaxE),
+     day(CurrDay),
+     NextDay is CurrDay + 1,
+     retractall(energy(_)),
+     retractall(day(_)),
+     asserta(energy(MaxE)),
+     asserta(day(NextDay)).
 
 state(initialized).
 
@@ -35,6 +50,7 @@ mainMenu :-
 startGame :- 
      reset,
      asserta(state(started)),
+     asserta(day(1)),
      initMap,
 
      write('Game Started'),nl,
@@ -49,10 +65,16 @@ startGame :-
      menuInGame.
 
 menuInGame :-
-     write('Pilih Hal yang ingin dilakukan!'),nl,
+     
+     
+
+
+     write('What do you want to do : '),nl,
      write('1. w,a,s,d untuk berpindah tempat'),nl,
      write('2. map'),nl,
      write('3. status'),nl,
+     write('3. fish'),nl,
+     write('10. exit'),nl,
      write('>>> '),
      read(Choice), nl,!,
      ( 
@@ -60,14 +82,31 @@ menuInGame :-
           (Choice = a, a);
           (Choice = s, s);
           (Choice = d, d);
+          (Choice = fish, mancing);
           (Choice = map, map);
-          (Choice = status, showStat)
+          (Choice = status, showStat);
+          (Choice = exit, exitGame)
+          % (write('Invalid command'),nl)
      ),
+     energy(E),
+     E =< 0,
+     write('You have run out of energy and magically sleep in your house'),
+     sleep,
+     
      menuInGame.
+     
 
 
 
 loadGame :-
      write('Game Loaded'),nl.    
 
-exitGame :- halt.
+exitGame :- 
+     write('Are you sure you want to exit the game? (y/n)'),nl,
+     write('>>> '),
+     read(Choice), nl,!,
+     (
+          (Choice = y, write('Thank You for playing the game!'), halt);
+          (Choice= n, menuInGame)
+     ).
+

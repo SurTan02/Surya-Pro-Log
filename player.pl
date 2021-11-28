@@ -46,7 +46,7 @@ reset :-
 pilihJob(_) :- jobPlayer(_), !.
 pilihJob(Job) :-
                 setStat(Job),
-                asserta(maxEnergy(150)),
+                asserta(maxEnergy(16)),
                 firstLevel,
                 format('Anda memilih job sebagai ~w', [Job]),nl.
 
@@ -258,13 +258,14 @@ showStat :-
     (expRanching(XPranch)),
     (levelFarming(LVLfarm)),
     (expFarming(XPfarm)),
+    (day(CurrDay)),
 
     XPplayerNeeded is LVLP*100,
     XPfishNeeded is LVLfish*100,
     XPranchNeeded is LVLranch*100,
     XPfarmNeeded is LVLfarm*100,
 
-
+    format('Day             : ~w    ', [CurrDay]),nl,
     format('Energi          : ~w/~w', [E,MaxE]),nl,
     format('Uang            : ~w', [Money]),nl,
     format('Level Player    : ~w', [LVLP]),nl,
@@ -274,8 +275,4 @@ showStat :-
     format('EXP Farming     : ~w/~w', [XPfarm,XPfarmNeeded]),nl,
     format('Hasil Panen     : ~w', [Panen]),nl,
     format('Kapasitas Ranch : ~w', [Ranch]),nl,
-    format('Keberuntungan   : ~w', [Kehokian]),nl.
-
-
-
-    
+    format('Keberuntungan   : ~w', [Kehokian]),nl,!.
