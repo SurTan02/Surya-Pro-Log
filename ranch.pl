@@ -1,4 +1,5 @@
 :- include('player.pl').
+:- include('inventory.pl').
 
 :- dynamic(valCow/1).
 :- dynamic(valChicken/1).
@@ -66,7 +67,8 @@ getChickenProduce :-
     write('You gain 50 Exp Ranching'),nl,
     write('You gain 50 Exp Player'),    
     earnEXPRanching(50),
-    earnEXPPlayer(50)
+    earnEXPPlayer(50),
+    addNtimes(A, 5)
     ),
     retractall(eggVal(_)),
     asserta(eggVal(0)).
@@ -80,7 +82,8 @@ getSheepProduce :-
     write('You gain 50 Exp Ranching'),nl,
     write('You gain 50 Exp Player'),    
     earnEXPRanching(50),
-    earnEXPPlayer(50)
+    earnEXPPlayer(50),
+    addNtimes(A, 6)
     ),
     retractall(woolVal(_)),
     asserta(woolVal(0)).
@@ -94,7 +97,8 @@ getCowProduce :-
     write('You gain 50 Exp Ranching'),nl,
     write('You gain 50 Exp Player'),    
     earnEXPRanching(50),
-    earnEXPPlayer(50)
+    earnEXPPlayer(50),
+    addNtimes(A, 4)
     ),
     retractall(milkVal(_)),
     asserta(milkVal(0)).
