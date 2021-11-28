@@ -52,27 +52,27 @@ initFarming :-
 updateFromInventory :-
     findall(InvID, myInventory(InvID,_,_,_,_,_,_,_,_), ListID),
     (
-        isInInventory(10, ListID) -> myInventory(10,_,_,_,_,_,_,_, CarCount),retractall(valCarrotSeed(_)), asserta(valCarrotSeed(CarCount));
+        isInInventory(10, ListID) -> myInventory(10,carrot_seed,_,_,_,_,_,_, CarCount),retractall(valCarrotSeed(_)), asserta(valCarrotSeed(CarCount));
         retractall(valCarrotSeed(_)), asserta(valCarrotSeed(0))
     ),
 
     (
-        isInInventory(11, ListID) -> myInventory(11,_,_,_,_,_,_,_, PotCount),retractall(valPotatoSeed(_)), asserta(valPotatoSeed(PotCount));
+        isInInventory(11, ListID) -> myInventory(11,potato_seed,_,_,_,_,_,_, PotCount),retractall(valPotatoSeed(_)), asserta(valPotatoSeed(PotCount));
         retractall(valPotatoSeed(_)), asserta(valPotatoSeed(0))
     ),
 
     (
-        isInInventory(12, ListID) -> myInventory(12,_,_,_,_,_,_,_,CorCount),retractall(valCornSeed(_)),asserta(valCornSeed(CorCount));
+        isInInventory(12, ListID) -> myInventory(12,corn_seed,_,_,_,_,_,_, CorCount),retractall(valCornSeed(_)),asserta(valCornSeed(CorCount));
         retractall(valCornSeed(_)), asserta(valCornSeed(0))
     ),
 
     (
-        isInInventory(13, ListID) -> myInventory(13,_,_,_,_,_,_,_,TomCount), retractall(valTomatoSeed(_)), asserta(valTomatoSeed(TomCount));
+        isInInventory(13, ListID) -> myInventory(13,tomato_seed,_,_,_,_,_,_, TomCount), retractall(valTomatoSeed(_)), asserta(valTomatoSeed(TomCount));
         retractall(valTomatoSeed(_)), asserta(valTomatoSeed(0))
     ),
 
     (
-        isInInventory(14, ListID) -> myInventory(14, _, _, _, _, _, _, _, PumpkinCount), asserta(valPumpkinSeed(PumpkinCount));
+        isInInventory(14, ListID) -> myInventory(14,pumpkin_seed,_,_,_,_,_,_, PumpkinCount), asserta(valPumpkinSeed(PumpkinCount));
         retractall(valPumpkinSeed(_)), asserta(valPumpkinSeed(0))
     ).
 
@@ -106,9 +106,9 @@ plant :-
             valPumpkinSeed(CurrPump),
             write(CurrCar), write(' carrot seed'),nl,
             write(CurrCor), write(' corn seed'),nl,
-            write(CurPot), write(' potato seed'),nl,
-            write(CurTom), write(' tomato seed'),nl,
-            write(CurPump), write(' pumpkin seed'),nl,
+            write(CurrPot), write(' potato seed'),nl,
+            write(CurrTom), write(' tomato seed'),nl,
+            write(CurrPump), write(' pumpkin seed'),nl,
             write('What do you want to plant?'),nl,
             read(Choice),
             (
@@ -221,27 +221,33 @@ plant :-
     ).
 
 harvest :-
-    valCarrot(VCar),
-    valCorn(VCor),
-    valPotato(VPot),
-    valTomato(VTom),
-    valPumpkinSeed(VPump),
-    write('You have : '),nl,
-    write(VCar), write(' carrot plant'),nl,
-    write(VCor),write(' corn plant'),nl,
-    write(VPot),write(' potato plant'),nl,
-    write(VTom), write(' tomato plant'),nl,
-    write(VPump), write(' pumpkin plant'),nl,
-
-    write('Which plant do you want to harvest?'),!,nl,
-    read(Choice),nl,!,
-    (
-     (Choice = carrot), getCarrotProduce;
-     (Choice = potato), getPotatoProduce;
-     (Choice = corn), getCornProduce;
-     (Choice = tomato), getTomatoProduce;
-     (Choice = pumpkin), getPumpkinProduce
+    playerCoord(X,Y),
+    (   diggedTile(X,Y) ->
+            valCarrot(VCar),
+            valCorn(VCor),
+            valPotato(VPot),
+            valTomato(VTom),
+            valPumpkin(VPump),
+            write('You have : '),nl,
+            write(VCar), write(' carrot plant'),nl,
+            write(VPot),write(' potato plant'),nl,
+            write(VCor),write(' corn plant'),nl,
+            write(VTom), write(' tomato plant'),nl,
+            write(VPump), write(' pumpkin plant'),nl,
+        
+            write('Which plant do you want to harvest?'),!,nl,
+            read(Choice),nl,!,
+            (
+            (Choice = carrot), getCarrotProduce;
+            (Choice = potato), getPotatoProduce;
+            (Choice = corn), getCornProduce;
+            (Choice = tomato), getTomatoProduce;
+            (Choice = pumpkin), getPumpkinProduce
+            );
+        
+        write('Player must be in digged tile!')
     ).
+
 
 getCarrotProduce :-
     valCar(A),
