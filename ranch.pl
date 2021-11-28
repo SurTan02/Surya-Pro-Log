@@ -239,14 +239,14 @@ makeCheese :-
     jobPlayer(X),
     levelRanching(LVLR),
     (
-        X = rancher, write('Only Rancher can do this task!\n'), !,fail;
-        LVLR < 7, write('You level is too low to do this task!'),!,fail;
+        X = rancher, write('Only Rancher can do this task!\n'), !, fail;
+        LVLR < 7, write('You level is too low to do this task!'),!, fail;
         !
     ),
     write('How many cheese do you want to make\n'),
     write(>>>),read(N),nl,
-    myInventory(4, milk, 'milk', rancherProd, 0, _, _,40, Count),
-
+    myInventory(4, _, _, _, _, _, _,_, Count),
+    % write(Count),
 
     (
         Count >= N, addNtimes(N, 7), deleteNItems(N,4), format('You got ~w cheese!', [N]),nl
@@ -270,7 +270,7 @@ makeMayo :-
     ),
     write('How many mayonnaise do you want to make\n'),
     write(>>>),read(N),nl,
-    myInventory(5, egg, 'egg', rancherProd, 0, 300, 0, 10, Count),
+    myInventory(5,  _, _, _, _, _, _,_, Count),
 
 
     (
@@ -294,7 +294,7 @@ makeSweater :-
     ),
     write('How many Sweater do you want to make\n'),
     write(>>>),read(N),nl,
-    myInventory(6, wool, 'wool', rancherProd, 0, 600, 0, 20, Count),
+    myInventory(6,  _, _, _, _, _, _,_, Count),
 
     (
         Count >= N, addNtimes(N, 9), deleteNItems(N,6), format('You got ~w Sweater!', [N]),nl
