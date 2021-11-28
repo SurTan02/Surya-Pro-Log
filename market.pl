@@ -1,9 +1,6 @@
 % boolean apakah player didalam store
 :- dynamic(isInMarket/1).
 
-% :- include('items.pl').
-% :- include('inventory.pl').
-
 % % FOR DEBUGGING PURPOSES
 % myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
 % myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
@@ -42,6 +39,7 @@ market :-
         writeShovel,
         writeRod,
         writeBoat,
+        writeSpecial,
         write('Write the name of the item that you want to buy'), nl,
         write('example: \'carrot seed\', to buy carrot seed. '), nl,
         read(ItemName), nl,
@@ -64,7 +62,15 @@ market :-
         )
     ;  write('Terimakasih sudah mengunjungi Store! :D'),nl,
         retract(isInMarket(_)),!
-    ). 
+    ).
+
+writeSpecial :-
+    day(Day), 
+    (
+        (Day =:= 69 ; Day =:= 190) ->
+        write('**SPECIAL ITEM**'), nl,
+        write('- specialtiesPotion (instant Job levelup when consumed!)'), nl
+    ).
 
 writeShovel :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
@@ -189,11 +195,9 @@ sell(StringName, N) :-
     myInventory(ID,_, StringName,_,_,_,_,Price,_),
 
     deleteNItems(N,ID),
-    money(Money),
+    % money(Money),
     TotalPrice is N*Price,
-    NowMoney is Money + TotalPrice,
+    % NowMoney is Money + TotalPrice,
     write('You sold '), write(N), write(' '), write(StringName), nl,
-    write('You received '), write(NowMoney), write(' gold.'),
-    retract(money(Money)),
-    asserta(money(NowMoney)),
+    earnMoney(TotalPrice),
     nl,!.

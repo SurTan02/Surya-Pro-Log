@@ -125,10 +125,10 @@ writeElem(X,Y) :-
 % 	write('o'),
 % 	writeElem(X+1,Y).
 
-% writeElem(X,Y) :-
-% 	diggedTile(X,Y),
-% 	write('='),
-% 	writeElem(X+1,Y).
+writeElem(X,Y) :-
+	diggedTile(X,Y),
+	write('='),
+	writeElem(X+1,Y).
 
 writeElem(X,Y) :-
 	tembokBawah(X,Y),
