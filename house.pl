@@ -39,7 +39,8 @@ sleep :-
         read(X), nl,
         write('Y >>>'),
         read(Y),
-        teleport(X,Y)
+        teleport(X,Y);
+        !
     ),
     write('Day '), write(D),nl,
     write('Season: '), write(Season), nl,
@@ -47,9 +48,9 @@ sleep :-
     retract(isInHouse(_)), !.
 
 initPeriTidur :-
-    random(0,100,X),
+    random(0,1000,X),
     luck(Y),
-    X < Y*60, !,
+    X < Y*10, !,
     asserta(isKetemuPeriTidur(1)), !.
 
 forceSleep :-
@@ -57,7 +58,3 @@ forceSleep :-
      retractall(playerCoord(_,_)),
      asserta(playerCoord(X,Y)),
      sleep.
-
-
-
-

@@ -48,7 +48,7 @@ resetRanchVal :-
     retractall(cow(_,_)),
     retractall(sheep(_,_)).
     
-ranchMenu :-
+ranch :-
     write('Welcome to the ranch! You have :'),nl,
     valChicken(CurrCh),
     valSheep(CurrSh),
@@ -225,3 +225,6 @@ checkChickenProduction(H,X,ID) :-
             Left > 0, EN is mod(Left,300)
     ),
     retractall(chickenEN(_)), asserta(chickenEN(EN)).
+
+
+

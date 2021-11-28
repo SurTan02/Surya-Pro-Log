@@ -50,7 +50,8 @@ pilihJob(Job) :-
                 setStat(Job),
                 asserta(maxEnergy(150)),
                 firstLevel,
-                format('You choose ~w, let\'s start working', [Job]),nl, updatePrice,
+                format('You choose ~w, let\'s start working', [Job]),nl,
+                %  updatePrice,
                 status.
 
 
@@ -89,7 +90,7 @@ earnMoney(X):-
     retractall(money(_)),
     After is Before + X,
     asserta(money(After)),
-    format('You just gained ~w gold, you have ~w gold',[X,After]), nl, nl, checkGoalMoney,nl.
+    format('You just gained ~w gold, you have ~w gold',[X,After]), nl, nl, checkGoalMoney,nl,!.
     
 spendMoney(X):-
     money(Before),
@@ -98,11 +99,11 @@ spendMoney(X):-
     asserta(money(After)),
     format('You just spent ~w gold, you have ~w gold',[X,After]), nl.
 
-gainEnergy(_) :-
-    energy(Eawal),
-    maxEnergy(MaxE),
-    Eawal = MaxE,
-    write('Your current energy is full!'),nl, !.
+% gainEnergy(_) :-
+%     energy(Eawal),
+%     maxEnergy(MaxE),
+%     Eawal = MaxE,
+%     write('Your current energy is full!'),nl, !.
 
 gainEnergy(X) :-
     energy(Eawal),
@@ -298,7 +299,7 @@ status :-
         LVLfarm >= 10  -> write('Farming Exp     :  MAX'),nl
 
     ),
-    
+
     format('Hasil Panen     : ~w', [Panen]),nl,
     format('Ranch Capacity  : ~w', [Ranch]),nl,
     format('Luck            : ~w', [Kehokian]),nl,

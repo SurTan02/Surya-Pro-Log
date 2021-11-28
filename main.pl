@@ -60,7 +60,7 @@ help :-
      write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n').
   
 
-tampilanAwal :-
+start  :-
      write(' _   _                           _\n'),   
      write('| | | | __ _ _ ____   _____  ___| |_ \n'),   
      write('| |_| |/ _` | \'__\\ \\ / / _ \\/ __| __|\n'),   
@@ -79,10 +79,7 @@ tampilanAwal :-
      write('% 2. exit          : Quit the game                                              %\n'),
      write('%                                                                               %\n'),
      write('%                                                                               %\n'),
-     write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n').
-
-
-menuAwal :-
+     write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
      write('>>> '),
      read(Choice), nl,
      ( 
@@ -92,11 +89,7 @@ menuAwal :-
           (Choice = exit, halt)
           % (write('Invalid command!\n'),menuAwal)
      ).
-
-start :-
-     tampilanAwal,
-     menuAwal.
-    
+        
 startGame :- 
      reset,
      asserta(state(started)),
@@ -111,11 +104,6 @@ startGame :-
      write('3. farmer'),nl,
      write('>>> '),
      read(Choice), nl,
-     % (    \+job(Choice), 
-     %      write('Invalid Job!\n'), 
-     %      write('>>> '),
-     %      read(Choice), nl
-     % );
      (    pilihJob(Choice)
      ),
      menuInGame.
@@ -125,34 +113,6 @@ menuInGame :-
      write('>>> '),
      read(Choice), nl,!,
      call(Choice),
-     % ( 
-          
-     %      (Choice = map, map);
-     %      (Choice = status, showStat);
-     %      (Choice = w, w);
-     %      (Choice = a, a);
-     %      (Choice = s, s);
-     %      (Choice = d, d);
-     %      (Choice = inventory, inventory);
-     %      (Choice = market, market);
-     %      (Choice = fish, mancing);
-     %      (Choice = dig, dig);
-     %      (Choice = plant, plant);
-     %      (Choice = harvest, harvest);
-          
-          
-     %      (Choice = exit, exitGame)
-     %      % (write('Invalid command'),nl)
-     % ),
-     % energy(E),
-     % E =< 0,
-     % write('You have run out of energy and magically sleep in your house'),
-     % sleep,
-     
-     menuInGame.
-     
-
-
 
 loadGame :-
      write('Game Loaded'),nl.    

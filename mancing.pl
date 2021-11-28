@@ -35,9 +35,12 @@ fish :-
     checkEnergy(8,1),
     random(0,1000,_X),
     luck(Z),
-    item(_, fishingrod, _, _,LVLROD, _, _, _),
+    (
+        insideMyInventory('level 3 fishing rod'), LVLROD is 3;
+        insideMyInventory('level 2 fishing rod'),LVLROD is 2;
+        insideMyInventory('level 1 fishing rod'),LVLROD is 1
+    ),
     Y is LVLROD + Z,
-
     _X < Y*15, !,
     write('You got Betutu Fish!'),nl,
     addToInventory(20),
@@ -52,10 +55,14 @@ fish :-
 
 % Kasus mendapatkan Ikan Grade Menengah (Gurame Fish). 
 fish :-
-    checkEnergy(8,1),
+    checkEnergy(8,0),
     random(0,1000,_X),
     luck(Z),
-    item(_, fishingrod, _, _,LVLROD, _, _, _),
+    (
+        insideMyInventory('level 3 fishing rod'), LVLROD is 3;
+        insideMyInventory('level 2 fishing rod'),LVLROD is 2;
+        insideMyInventory('level 1 fishing rod'),LVLROD is 1
+    ),
     Y is LVLROD + Z,
 
     _X < Y*30, !,
@@ -72,10 +79,15 @@ fish :-
 
 % Kasus mendapatkan Ikan Grade Rendah (Teri Fish). 
 fish :- 
-    checkEnergy(8,1),
+    checkEnergy(8,0),
     random(0,1000,_X),
     luck(Z),
-    item(_, fishingrod, _, _,LVLROD, _, _, _),
+    (
+        insideMyInventory('level 3 fishing rod'), LVLROD is 3;
+        insideMyInventory('level 2 fishing rod'),LVLROD is 2;
+        insideMyInventory('level 1 fishing rod'),LVLROD is 1
+    ),
+    
     Y is LVLROD + Z,
 
     _X < Y*60, !,
