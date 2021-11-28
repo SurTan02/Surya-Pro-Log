@@ -20,6 +20,7 @@ addToInventory(_) :-
     !,fail.
 
 addToInventory(ID) :-
+    update_quest(ID),
     findall(InvID, myInventory(InvID,_,_,_,_,_,_,_,_), ListID),
     (   isInInventory(ID, ListID) -> %jikka ada di inventory
         item(ID, Name,_,_,_,_,_,_),

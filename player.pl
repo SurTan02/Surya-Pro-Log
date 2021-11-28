@@ -1,4 +1,6 @@
 % :- include('activity.pl').
+:- include('quest.pl').
+
 :- dynamic(money/1).
 :- dynamic(energy/1).
 :- dynamic(maxEnergy/1).
@@ -268,6 +270,7 @@ showStat :-
     (levelFarming(LVLfarm)),
     (expFarming(XPfarm)),
     (day(CurrDay)),
+    current_quest(Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des),
 
     XPplayerNeeded is LVLP*100,
     XPfishNeeded is LVLfish*100,
@@ -287,4 +290,6 @@ showStat :-
     format('Farming Exp     : ~w/~w', [XPfarm,XPfarmNeeded]),nl,
     format('Hasil Panen     : ~w', [Panen]),nl,
     format('Ranch Capacity  : ~w', [Ranch]),nl,
-    format('Luck            : ~w', [Kehokian]),nl,nl,!.
+    format('Luck            : ~w', [Kehokian]),nl,nl,
+    format('Quest Progress  : ~d Egg, ~d Wool, ~d Milk, ~d Mayonnaise, ~d Sweater, ~d Cheese\n                  ~d Carrot, ~d Potato, ~d Corn, ~d Tomato, ~d Pumpkin\n                  ~d Ikan Teri, ~d Ikan Gurame, ~d Ikan Betutu',[Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]),
+    !.

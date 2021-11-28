@@ -8,6 +8,7 @@
 :- include('inventory.pl').
 :- include('market.pl').
 :- include('items.pl').
+:- include('quest.pl').
 
 :- dynamic(state/1).
 :- dynamic(day/1).
@@ -98,6 +99,7 @@ startGame :-
      asserta(state(started)),
      asserta(day(1)),
      initMap,
+     post_quest.
      write('Game Started'),nl,
      write('Welcome to Harvest Star. Choose your job!'),nl,
      write('1. fisherman'),nl,
