@@ -31,9 +31,9 @@ post_quest :-
 
 /* Display papan quest */
 display_quest(X,[[Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]]) :- 
-	format('  ~d. ~d Egg, ~d Wool, ~d Milk, ~d Mayonnaise, ~d Sweater, ~d Cheese\n     ~d Carrot, ~d Potato, ~d Corn, ~d Tomato, ~d Pumkin\n     ~d Ikan Teri, ~d Ikan Gurame, ~d Ikan Betutu\n     Upah: ~d EXP dan ~d Gold.\n\n     - ~w\n\n',[X,Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]).
+	format('  ~d. ~d Egg, ~d Wool, ~d Milk, ~d Mayonnaise, ~d Sweater, ~d Cheese\n     ~d Carrot, ~d Potato, ~d Corn, ~d Tomato, ~d Pumpkin\n     ~d Ikan Teri, ~d Ikan Gurame, ~d Ikan Betutu\n     Upah: ~d EXP dan ~d Gold.\n\n     - ~w\n\n',[X,Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]).
 display_quest(X,[[Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]|Tail]) :-
-	format('  ~d. ~d Egg, ~d Wool, ~d Milk, ~d Mayonnaise, ~d Sweater, ~d Cheese\n     ~d Carrot, ~d Potato, ~d Corn, ~d Tomato, ~d Pumkin\n     ~d Ikan Teri, ~d Ikan Gurame, ~d Ikan Betutu\n     Upah: ~d EXP dan ~d Gold.\n\n     - ~w\n\n',[X,Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]),
+	format('  ~d. ~d Egg, ~d Wool, ~d Milk, ~d Mayonnaise, ~d Sweater, ~d Cheese\n     ~d Carrot, ~d Potato, ~d Corn, ~d Tomato, ~d Pumpkin\n     ~d Ikan Teri, ~d Ikan Gurame, ~d Ikan Betutu\n     Upah: ~d EXP dan ~d Gold.\n\n     - ~w\n\n',[X,Egg,Wol,Mlk,Myo,Swt,Chs,Crt,Pto,Crn,Tmo,Pkn,Tri,Grm,Btu,Exp,Gld,Des]),
 	NextX is X + 1,
 	display_quest(NextX,Tail), !.
 display_quest :-
@@ -60,8 +60,9 @@ quest :-
 
 /* Semua quest sudah diambil */
 quest :-
-	\+available_quest(_),!,
-	write('WOW! Kamu sudah membantu semua orang di Desa! Keren banget euy!!\n').
+	available_quest(Q),
+   Q = [],!,
+	write('\n  - WOW! Kamu sudah membantu semua orang di Desa! Keren banget euy!!\n').
 
 /* Normal */
 quest :-
@@ -85,7 +86,7 @@ quest :-
 		write('Kamu keluar dari Papan Quest Desa.\n'),
 		!);
    (
-		write('Kamu keluar dari Papan Quest Desa.\n'),
+		write('\nKamu keluar dari Papan Quest Desa.\n'),
 		!).
 
 /* MEKANISME REWARD */
