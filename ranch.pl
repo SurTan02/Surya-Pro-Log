@@ -184,16 +184,16 @@ checkRanchProduce(X) :-
     sheepEN(SheepEN),
     chickenEN(ChickenEN),
     (
-        VCow = 0 -> write('No Cows'),nl;
+        VCow = 0 -> nl;
         VCow > 0 -> checkCowProduction(CowEN,X,1)
     ),
     (
-        VChick = 0 -> write('No Chicken'),nl;
+        VChick = 0 -> nl;
         VChick > 0 -> checkChickenProduction(ChickenEN,X,1)
     ),
     (
-        VSheep = 0 -> write('No Sheep'),nl;
-        VSheep > 0 -> checkSheepProduction(SheepEN,X,1), write('masuk sini')
+        VSheep = 0 -> nl;
+        VSheep > 0 -> checkSheepProduction(SheepEN,X,1)
     ).
     
 
@@ -228,3 +228,76 @@ checkChickenProduction(H,X,ID) :-
 
 
 
+
+makeCheese :-
+    \+insideMyInventory('milk'),
+    write('You don\'t have any milk in your inventory'), nl,
+    !, fail.
+
+
+makeCheese :-
+    jobPlayer(X),
+    levelRanching(LVLR),
+    (
+        X = rancher, write('Only Rancher can do this task!\n'), !,fail;
+        LVLR < 7, write('You level is too low to do this task!'),!,fail;
+        !
+    ),
+    write('How many cheese do you want to make\n'),
+    write(>>>),read(N),nl,
+    myInventory(4, milk, 'milk', rancherProd, 0, _, _,40, Count),
+
+
+    (
+        Count >= N, addNtimes(N, 7), deleteNItems(N,4), format('You got ~w cheese!', [N]),nl
+        ;
+        Count < N, format('You don\'t have ~w milk in your inventory', [N]),nl
+    ).
+
+makeMayo :-
+    \+insideMyInventory('egg'),
+    write('You don\'t have any egg in your inventory'), nl,
+    !, fail.
+
+
+makeMayo :-
+    jobPlayer(X),
+    levelRanching(LVLR),
+    (
+        X = rancher, write('Only Rancher can do this task!\n'), !,fail;
+        LVLR < 3, write('You level is too low to do this task!'),!,fail;
+        !
+    ),
+    write('How many mayonnaise do you want to make\n'),
+    write(>>>),read(N),nl,
+    myInventory(5, egg, 'egg', rancherProd, 0, 300, 0, 10, Count),
+
+
+    (
+        Count >= N, addNtimes(N, 8), deleteNItems(N,5), format('You got ~w mayonnaise!', [N]),nl
+        ;
+        Count < N, format('You don\'t have ~w eggs in your inventory', [N]),nl
+    ).
+
+makeSweater :-
+    \+insideMyInventory('wool'),
+    write('You don\'t have any wool in your inventory'), nl,
+    !, fail.
+
+makeSweater :-
+    jobPlayer(X),
+    levelRanching(LVLR),
+    (
+        X = rancher, write('Only Rancher can do this task!\n'), !,fail;
+        LVLR < 5, write('You level is too low to do this task!'),!,fail;
+        !
+    ),
+    write('How many Sweater do you want to make\n'),
+    write(>>>),read(N),nl,
+    myInventory(6, wool, 'wool', rancherProd, 0, 600, 0, 20, Count),
+
+    (
+        Count >= N, addNtimes(N, 9), deleteNItems(N,6), format('You got ~w Sweater!', [N]),nl
+        ;
+        Count < N, format('You don\'t have ~w wool in your inventory', [N]),nl
+    ).

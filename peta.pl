@@ -18,7 +18,6 @@
 % working_directory(CWD,'C:/Users/irfan/OneDrive/Documents/Nando/Informatika/tubesLogkom/IF2121_K02_G01/src').
 % working_directory(CWD,'C:/Users/irfan/OneDrive/Documents/Nando/Informatika/tubesLogkom/Surya-Pro-Log').
 
-
 % pemosisian tembok
 tembokAtas(_,Y) :-
     Y =:= 0.
@@ -60,11 +59,6 @@ marketPos(X,Y) :-
     X =:= A,
     Y =:= B.
 
-diggedPos(X,Y) :-
-	diggedTile(A, B),
-	X =:= A,
-	Y =:= B,
-
 % waterTile(0,_).
 waterTile(X,_) :-
     X =:= 1.
@@ -93,8 +87,12 @@ writeElem(X,Y) :-
 	tembokBawah(X,Y),
 	write('#').
 
-%Rekurens penampilan peta
+writeElem(X,Y) :-
+	diggedTile(X,Y),
+	write('='),
+	writeElem(X+1,Y).
 
+%Rekurens penampilan peta
 writeElem(X,Y) :-
     \+tembokAtas(X,Y),
     \+tembokBawah(X,Y),
@@ -132,10 +130,6 @@ writeElem(X,Y) :-
 % 	write('o'),
 % 	writeElem(X+1,Y).
 
-writeElem(X,Y) :-
-	diggedPos(X,Y),
-	write('='),
-	writeElem(X+1,Y).
 
 writeElem(X,Y) :-
 	tembokBawah(X,Y),
