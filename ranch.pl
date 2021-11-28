@@ -184,16 +184,16 @@ checkRanchProduce(X) :-
     sheepEN(SheepEN),
     chickenEN(ChickenEN),
     (
-        VCow = 0 -> write('No Cows'),nl;
+        VCow = 0 -> nl;
         VCow > 0 -> checkCowProduction(CowEN,X,1)
     ),
     (
-        VChick = 0 -> write('No Chicken'),nl;
+        VChick = 0 -> nl;
         VChick > 0 -> checkChickenProduction(ChickenEN,X,1)
     ),
     (
-        VSheep = 0 -> write('No Sheep'),nl;
-        VSheep > 0 -> checkSheepProduction(SheepEN,X,1), write('masuk sini')
+        VSheep = 0 -> nl;
+        VSheep > 0 -> checkSheepProduction(SheepEN,X,1)
     ).
     
 

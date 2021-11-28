@@ -1,7 +1,3 @@
-:- include('player.pl').
-:- include('inventory.pl').
-:- include('peta.pl').
-
 :- dynamic(valCarrotSeed/1). %how many carrot seeds
 :- dynamic(valPotatoSeed/1).
 :- dynamic(valCornSeed/1).
@@ -14,16 +10,18 @@
 :- dynamic(valTomato/1).
 :- dynamic(valPumpkin/1).
 
-:- dynamic(carrot/2). %nyimpen perlu berapa energi lagi buat produce (energyleft, ID)
-:- dynamic(corn/2).
-:- dynamic(potato/2).
-:- dynamic(tomato/2).
-:- dynamic(pumpkin/2).
-:- dynamic(carrotID/1). %next id ke berapa ya ???
-:- dynamic(cornID/1).
-:- dynamic(potatoID/1).
-:- dynamic(tomatoID/1).
-:- dynamic(pumpkinID/1).
+:- dynamic(valCar/1). %how many carrot
+:- dynamic(valPot/1).
+:- dynamic(valCor/1).
+:- dynamic(valTom/1).
+:- dynamic(valPump/1).
+
+
+:- dynamic(carrotEN/1).
+:- dynamic(cornEN/1).
+:- dynamic(potatoEN/1).
+:- dynamic(tomatoEN/1).
+:- dynamic(pumpkinEN/1).
 
 initFarming :-
     asserta(valCarrotSeed(0)),
@@ -37,33 +35,39 @@ initFarming :-
     asserta(valPotato(0)),
     asserta(valTomato(0)),
     asserta(valPumpkin(0)),
+    
+    asserta(valCarrotEN(150)),
+    asserta(valCornEN(450)),
+    asserta(valPotatoEN(175)),
+    asserta(valTomatoEN(800)),
+    asserta(valPumpkinEN(1000)),
 
-    asserta(carrotID(1)),
-    asserta(cornID(1)),
-    asserta(potatoID(1)),
-    asserta(tomatoID(1)),
-    asserta(pumpkinID(1)).
+    asserta(valCar(0)),
+    asserta(valCor(0)),
+    asserta(valPot(0)),
+    asserta(valTom(0)),
+    asserta(valPump(0)).
 
 
 updateFromInventory :-
     findall(InvID, myInventory(InvID,_,_,_,_,_,_,_,_), ListID),
     (
-        isInInventory(10, ListID) -> myInventory(10, _, _, _, _, _, _, _, CarCount), asserta(valCarrotSeed(CarCount));
+        isInInventory(10, ListID) -> myInventory(10,_,_,_,_,_,_,_, CarCount),retractall(valCarrotSeed(_)), asserta(valCarrotSeed(CarCount));
         retractall(valCarrotSeed(_)), asserta(valCarrotSeed(0))
     ),
 
     (
-        isInInventory(11, ListID) -> myInventory(11, _, _, _, _, _, _, _, PotCount), asserta(valPotatoSeed(PotCount));
+        isInInventory(11, ListID) -> myInventory(11,_,_,_,_,_,_,_, PotCount),retractall(valPotatoSeed(_)), asserta(valPotatoSeed(PotCount));
         retractall(valPotatoSeed(_)), asserta(valPotatoSeed(0))
     ),
 
     (
-        isInInventory(12, ListID) -> myInventory(12, _, _, _, _, _, _, _, CorCount), asserta(valCornSeed(CorCount));
+        isInInventory(12, ListID) -> myInventory(12,_,_,_,_,_,_,_,CorCount),retractall(valCornSeed(_)),asserta(valCornSeed(CorCount));
         retractall(valCornSeed(_)), asserta(valCornSeed(0))
     ),
 
     (
-        isInInventory(13, ListID) -> myInventory(13, _, _, _, _, _, _, _, TomCount), asserta(valTomatoSeed(TomCount));
+        isInInventory(13, ListID) -> myInventory(13,_,_,_,_,_,_,_,TomCount), retractall(valTomatoSeed(_)), asserta(valTomatoSeed(TomCount));
         retractall(valTomatoSeed(_)), asserta(valTomatoSeed(0))
     ),
 
@@ -119,12 +123,7 @@ plant :-
                         valCarrot(A),
                         RES is A+1,
                         retractall(valCarrot(_)),
-                        asserta(valCarrot(RES)),
-                        carrotID(ID),
-                        assertz(carrot(150,ID)),
-                        NewID is ID + 1,
-                        retractall(carrotID(_)),
-                        asserta(carrotID(NewID))
+                        asserta(valCarrot(RES))
                     );
 
                 Choice = corn ->
@@ -141,12 +140,7 @@ plant :-
                         valCorn(A),
                         RES is A+1,
                         retractall(valCorn(_)),
-                        asserta(valCorn(RES)),
-                        cornID(ID),
-                        assertz(corn(450,ID)),
-                        NewID is ID + 1,
-                        retractall(cornID(_)),
-                        asserta(cornID(NewID))
+                        asserta(valCorn(RES))
                     );
 
                 Choice = potato ->
@@ -163,12 +157,7 @@ plant :-
                         valPotato(A),
                         RES is A+1,
                         retractall(valPotato(_)),
-                        asserta(valPotato(RES)),
-                        potatoID(ID),
-                        assertz(potato(175,ID)),
-                        NewID is ID + 1,
-                        retractall(potatoID(_)),
-                        asserta(potatoID(NewID))
+                        asserta(valPotato(RES))
                     );
 
                 Choice = tomato ->
@@ -188,12 +177,7 @@ plant :-
                                 valTomato(A),
                                 RES is A+1,
                                 retractall(valTomato(_)),
-                                asserta(valTomato(RES)),
-                                tomatoID(ID),
-                                assertz(tomato(800,ID)),
-                                NewID is ID + 1,
-                                retractall(tomatoID(_)),
-                                asserta(tomatoID(NewID));
+                                asserta(valTomato(RES));
                             
                             write('Shovel Level 2 Needed'),nl
                         )
@@ -217,12 +201,7 @@ plant :-
                                 valPumpkin(A),
                                 RES is A+1,
                                 retractall(valPumpkin(_)),
-                                asserta(valPumpkin(RES)),
-                                pumpkinID(ID),
-                                assertz(pumpkin(1000,ID)),
-                                NewID is ID + 1,
-                                retractall(pumpkinID(_)),
-                                asserta(pumpkinID(NewID));
+                                asserta(valPumpkin(RES));
                             
                             write('Shovel Level 3 Needed'),nl
                         )
@@ -334,121 +313,118 @@ getPumpkinProduce :-
 
 %everytime energies are spent, call this to update
 checkFarmProduce(X) :-
-    findall(Energy, carrot(Energy,_), ListCarrotEnergy),
-    findall(Energy, potato(Energy,_), ListPotatoEnergy),
-    findall(Energy, corn(Energy,_), ListCornEnergy),
-    findall(Energy, tomato(Energy,_), ListTomatoEnergy),
-    findall(Energy, pumpkin(Energy,_), ListPumpkinEnergy),
     valCarrot(Car),
     valCorn(Cor),
     valPotato(Pot),
     valTomato(Tom),
     valPumpkin(Pump),
+
+    carrotEN(CarEN),
+    cornEN(CorEN),
+    potatoEN(PotEN),
+    tomatoEN(TomEN),
+    pumpkinEN(PumEN),
     (
         Car = 0 -> nl;
-        checkCarrotProduction(ListCarrotEnergy,X,1)
+        Car > 0 -> checkCarrotProduction(CarEN,X,1)
     ),
     (
         Cor = 0 -> nl;
-        checkCornProduction(ListCornEnergy,X,1)
+        Cor > 0 -> checkCornProduction(CornEN,X,1)
     ),
     (
         Pot = 0 -> nl;
-        checkPotatoProduction(ListPotatoEnergy,X,1)
+        Pot > 0 -> checkPotatoProduction(PotEN,X,1)
     ),
     (
         Tom = 0 -> nl;
-        checkTomatoProduction(ListTomatoEnergy,X,1)
+        Tom > 0 -> checkTomatoProduction(TomEN,X,1)
     ),
     (
         Pump = 0 -> nl;
-        checkPotatoProduction(ListPumpkinEnergy,X,1)
-    ),
+        Tom > 0 -> checkPotatoProduction(PumEN,X,1)
+    ).
     
+
+incCarrot(X) :-
+    valCar(A),
+    valCarrot(B),
+    RES is A+(X*B),
+    retractall(valCar(_)),
+    asserta(valCar(RES)).
+
+incCorn(X) :-
+    valCor(A),
+    valCorn(B),
+    RES is A+(X*B),
+    retractall(valCor(_)),
+    asserta(valCor(RES)).
+
+incPotato(X) :-
+    valPot(A),
+    valPotato(B),
+    RES is A+(X*B),
+    retractall(valPot(_)),
+    asserta(valPot(RES)).
+
+incTomato(X) :-
+    valTom(A),
+    valTomato(B),
+    RES is A+(X*B),
+    retractall(valTom(_)),
+    asserta(valTom(RES)).
+
+incPumpkin(X) :-
+    valPump(A),
+    valPumpkin(B),
+    RES is A+(X*B),
+    retractall(valPump(_)),
+    asserta(valPump(RES)).
 
 
 % increase produce every X spend energy
-checkCarrotProduction([],X,0).
-checkCarrotProduction([H],X,ID) :- carrotID(B), B is B-1, B = ID,
+checkCarrotProduction(H,X,ID) :-
     Left is H-X,
     (
-        (Left =< 0), valCarrot(Car), NewCar is Car + 1, retractall(valCarrot(_)), asserta(valCarrot(NewCar))
+        Left = 0, EN is 150, incCarrot(1);
+        Left < 0, EN is mod(Left,150),incCarrot(1);
+        Left > 0, EN is mod(Left,150)
     ),
-    retract(cow(_,ID)), EN is mod(Left,150), assertz(cow(EN,ID)).
+    retractall(carrotEN(_)), asserta(carrotEN(EN)).
 
-checkCarrotProduction([H|T],X,ID) :-
+checkCornProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), valCarrot(Car), NewCar is Car + 1, retractall(valCarrot(_)), asserta(valCarrot(NewCar))
+        Left = 0, EN is 150, incCorn(1);
+        Left < 0, EN is mod(Left,150),incCorn(1);
+        Left > 0, EN is mod(Left,150)
     ),
-    retract(carrot(_,ID)), EN is mod(Left,150), assertz(carrot(EN,ID)).
-    NextID is ID+1,
-    checkCarrotProduction(T,X,NextID).
+    retractall(cornEN(_)), asserta(cornEN(EN)).
 
-checkCornProduction([],X,0).
-checkCornProduction([H],X,ID) :- cornID(B), B is B-1, B = ID,
+checkPotatoProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), valCorn(Corn), NewCorn is Corn + 1, retractall(valCorn(_)), asserta(valCorn(NewCorn))
+        Left = 0, EN is 175, incPotato(1);
+        Left < 0, EN is mod(Left,175),incPotato(1);
+        Left > 0, EN is mod(Left,175)
     ),
-    retract(corn(_,ID)), EN is mod(Left,450), assertz(corn(EN,ID)).
+    retractall(potatoEN(_)), asserta(potatoEN(EN)).
 
-checkCornProduction([H|T],X,ID) :-
+checkTomatoProduction(H,X,ID) :-
     Left is H-X,
     (
-        (Left =< 0), valCorn(Corn), NewCorn is Corn + 1, retractall(valCorn(_)), asserta(valCorn(NewCorn))
+        Left = 0, EN is 800, incTomato(1);
+        Left < 0, EN is mod(Left,800),incTomato(1);
+        Left > 0, EN is mod(Left,800)
     ),
-    retract(corn(_,ID)), EN is mod(Left,450), assertz(corn(EN,ID)).
-    NextID is ID+1,
-    checkCornProduction(T,X,NextID).
+    retractall(tomatoEN(_)), asserta(tomatoEN(EN)).
 
-checkPotatoProduction([],X,0).
-checkPotatoProduction([H],X,ID) :- potatoID(B), B is B-1, B = ID,
+checkPumpkinProduction(H,X,ID) :-
     Left is H-X,
     (
-        (Left =< 0), valPotato(Pot), NewPot is Pot + 1, retractall(valPotato(_)), asserta(valPotato(NewPot))
+        Left = 0, EN is 1000, incPumpkin(1);
+        Left < 0, EN is mod(Left,1000),incPumpkin(1);
+        Left > 0, EN is mod(Left,1000)
     ),
-    retract(potato(_,ID)), EN is mod(Left,175), assertz(potato(EN,ID)).
+    retractall(pumpkinEN(_)), asserta(pumpkinEN(EN)).
 
-checkPotatoProduction([H|T],X,ID) :-
-    Left is H-X,
-    (
-        (Left =< 0), valPotato(Potato), NewPotato is Potato + 1, retractall(valPotato(_)), asserta(valPotato(NewPotato))
-    ),
-    retract(potato(_,ID)), EN is mod(Left,175), assertz(potato(EN,ID)).
-    NextID is ID+1,
-    checkPotatoProduction(T,X,NextID).
-
-checkTomatoProduction([],X,0).
-checkTomatoProduction([H],X,ID) :- tomatoID(B), B is B-1, B = ID,
-    Left is H-X,
-    (
-        (Left =< 0), valTomato(Tomato), NewTomato is Tomato + 1, retractall(valTomato(_)), asserta(valTomato(NewTomato))
-    ),
-    retract(tomato(_,ID)), EN is mod(Left,800), assertz(tomato(EN,ID)).
-
-checkTomatoProduction([H|T],X,ID) :-
-    Left is H-X,
-    (
-        (Left =< 0), valTomato(Tomato), NewTomato is Tomato + 1, retractall(valTomato(_)), asserta(valTomato(NewTomato))
-    ),
-    retract(tomato(_,ID)), EN is mod(Left,800), assertz(tomato(EN,ID)).
-    NextID is ID+1,
-    checkTomatoProduction(T,X,NextID).
-
-checkPumpkinProduction([],X,0).
-checkPumpkinProduction([H],X,ID) :- pumpkinID(B), B is B-1, B = ID,
-    Left is H-X,
-    (
-        (Left =< 0), valPumpkin(Pumpkin), NewPumpkin is Pumpkin + 1, retractall(valPumpkin(_)), asserta(valPumpkin(NewPumpkin))
-    ),
-    retract(pumpkin(_,ID)), EN is mod(Left,1000), assertz(pumpkin(EN,ID)).
-
-checkPumpkinProduction([H|T],X,ID) :-
-    Left is H-X,
-    (
-        (Left =< 0), valPumpkin(Pumpkin), NewPumpkin is Pumpkin + 1, retractall(valPumpkin(_)), asserta(valPumpkin(NewPumpkin))
-    ),
-    retract(pumpkin(_,ID)), EN is mod(Left,1000), assertz(pumpkin(EN,ID)).
-    NextID is ID+1,
-    checkPumpkinProduction(T,X,NextID).

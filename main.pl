@@ -12,6 +12,7 @@
 :- include('house.pl').
 :- include('gamestats.pl').
 :- include('ranch.pl').
+:- include('farming.pl').
 
 :- dynamic(state/1).
 % :- dynamic(day/1).
@@ -96,6 +97,7 @@ startGame :-
      initMap,
      post_quest,
      initRanchVal,
+     initFarming,
      
      write('Game Started'),nl,
      write('Welcome to Harvest Star. Choose your job!'),nl,
