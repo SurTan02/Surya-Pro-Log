@@ -235,7 +235,6 @@ teleport(X,Y):-
 	\+tembokAtas(X,Y),
 	\+tembokKiri(X,Y),
 	\+tembokKanan(X,Y),
-	\+tembokTengah(X,Y),
     \+waterTile(X,Y),
     retract(playerCoord(_,_)),
     asserta(playerCoord(X,Y)),

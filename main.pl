@@ -1,6 +1,6 @@
 /* semua include di sini */
 
-:- include('menu.pl').
+% :- include('menu.pl').
 :- include('peta.pl').
 :- include('player.pl').
 :- include('mancing.pl').
@@ -9,21 +9,23 @@
 :- include('market.pl').
 :- include('items.pl').
 :- include('quest.pl').
+:- include('house.pl').
+:- include('gamestats.pl').
 
 :- dynamic(state/1).
-:- dynamic(day/1).
+% :- dynamic(day/1).
 
-sleep :-
-     houseCoord(X,Y),
-     retractall(playerCoord(_,_)),
-     asserta(playerCoord(X,Y)),
-     maxEnergy(MaxE),
-     day(CurrDay),
-     NextDay is CurrDay + 1,
-     retractall(energy(_)),
-     retractall(day(_)),
-     asserta(energy(MaxE)),
-     asserta(day(NextDay)).
+% sleep :-
+%      houseCoord(X,Y),
+%      retractall(playerCoord(_,_)),
+%      asserta(playerCoord(X,Y)),
+%      maxEnergy(MaxE),
+%      day(CurrDay),
+%      NextDay is CurrDay + 1,
+%      retractall(energy(_)),
+%      retractall(day(_)),
+%      asserta(energy(MaxE)),
+%      asserta(day(NextDay)).
 
 state(initialized).
 
@@ -97,9 +99,9 @@ start :-
 startGame :- 
      reset,
      asserta(state(started)),
-     asserta(day(1)),
      initMap,
-     post_quest.
+     post_quest,
+     
      write('Game Started'),nl,
      write('Welcome to Harvest Star. Choose your job!'),nl,
      write('1. fisherman'),nl,

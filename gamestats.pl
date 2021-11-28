@@ -42,7 +42,7 @@ updateSeason :-
     ;   (D > 92) ->
         retractall(season(_)),
         asserta(season(summer))
-    )
+    ).
 
 goalState :-
     write('selamat kamu menang!'), !.

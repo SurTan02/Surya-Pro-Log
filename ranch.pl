@@ -1,5 +1,5 @@
-:- include('player.pl').
-:- include('inventory.pl').
+% :- include('player.pl').
+% :- include('inventory.pl').
 
 :- dynamic(valCow/1).
 :- dynamic(valChicken/1).
@@ -16,7 +16,7 @@
 :- dynamic(sheepID/1).
 
 
-initializeRanchVal :-
+initRanchVal :-
     asserta(valCow(0)),
     asserta(valChicken(0)),
     asserta(valSheep(0)),
@@ -157,7 +157,7 @@ incChicken(X) :-
     asserta(chickenID(NewID)).
 
 %everytime energies are spent, call this to update
-checkProduce(X) :-
+checkRanchProduce(X) :-
     findall(Energy, chicken(Energy,_), ListChickenEnergy),
     findall(Energy, cow(Energy,_), ListCowEnergy),
     findall(Energy, sheep(Energy,_), ListSheepEnergy),
@@ -180,7 +180,7 @@ checkProduce(X) :-
 
 
 % increase produce every X spend energy
-checkCowProduction([],X,0).
+checkCowProduction([],_,0).
 checkCowProduction([H],X,ID) :- cowID(B), B is B-1, B = ID,
     Left is H-X,
     (

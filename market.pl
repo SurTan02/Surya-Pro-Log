@@ -1,16 +1,16 @@
 % boolean apakah player didalam store
 :- dynamic(isInMarket/1).
 
-:- include('items.pl').
-:- include('inventory.pl').
+% :- include('items.pl').
+% :- include('inventory.pl').
 
-% FOR DEBUGGING PURPOSES
-myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
-myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
-myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
+% % FOR DEBUGGING PURPOSES
+% myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
+% myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
+% myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
 
-playerCoord(2,2).
-marketCoord(2,2).
+% playerCoord(2,2).
+% marketCoord(2,2).
 
 % kondisi player diluar berada bukan pada tile market
 market :-
@@ -152,7 +152,15 @@ buy(_,N) :-
 buy(StringName, N) :-
     isInMarket(_),
     item(ID,_,StringName,_,_,_,_,Price),
-    addNtimes(N, ID),
+    (
+        (ID == 1) ->
+        incCow(N)
+    ;   (ID == 2) ->
+        incChicken(N)
+    ;   (ID == 3) ->
+        incSheep(N)
+    ;   addNtimes(N, ID)
+    ),
     TotalPrice is Price * N, 
     money(Money),
     NowMoney is Money-TotalPrice,

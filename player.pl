@@ -1,5 +1,5 @@
 % :- include('activity.pl').
-:- include('quest.pl').
+% :- include('quest.pl').
 
 :- dynamic(money/1).
 :- dynamic(energy/1).

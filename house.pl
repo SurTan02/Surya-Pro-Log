@@ -8,7 +8,7 @@ house :-
     !,fail.
 
 house :-
-    asserta(isInHouse(1)), repeat,
+    asserta(isInHouse(1)), 
     write('Welcome Home Claire!'), nl,
     write('What do you want to do?'), nl,
     write('\t- sleep'), nl,
@@ -23,7 +23,7 @@ sleep :-
 
 sleep :-
     isInHouse(_),
-    asserta(isSleeping(1)), repeat,
+    asserta(isSleeping(1)), 
     maxEnergy(Energy),
     gainEnergy(Energy),
     addDay,
@@ -40,7 +40,7 @@ sleep :-
         write('Y >>>'),
         read(Y),
         teleport(X,Y)
-    )
+    ),
     write('Day '), write(D),nl,
     write('Season: '), write(Season), nl,
     retract(isSleeping(_)),

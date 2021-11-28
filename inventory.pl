@@ -1,13 +1,13 @@
 :- dynamic(myInventory/9).
 
-:- include('items.pl').
-% myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count).
+% :- include('items.pl').
+% % myInventory(ID, Name, String_Name, Type, Level, EnergyNeed, EnergySupply, Price, Count).
 
-% FOR DEBUGGING PURPOSES
-myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
-myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
-myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
-myInventory(23, energy_drink, 'energyDrink', consumable, 0, 0, 50, 20, 3).
+% % FOR DEBUGGING PURPOSES
+% myInventory(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100, 1).
+% myInventory(10, carrot_seed, 'carrot seed', commodity, 1, 350, 0, 5, 10).
+% myInventory(11, potato_seed, 'potato seed', commodity, 1, 375, 0, 7, 2).
+% myInventory(23, energy_drink, 'energyDrink', consumable, 0, 0, 50, 20, 3).
 
 
 maxInventory(100).
