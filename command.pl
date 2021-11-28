@@ -70,3 +70,9 @@ a :-
     XNOW is X-1,
     tembokKiri(XNOW,Y),
     write('You Hit a Wall!'),  nl,!.
+
+a :- 
+    playerCoord(X,Y),
+    XNOW is X-1,
+    waterTile(XNOW,Y),
+    write('You are not Naruto, you can\'t walk on water!'),  nl,!.
