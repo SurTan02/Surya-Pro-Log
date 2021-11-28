@@ -105,8 +105,8 @@ plant :-
             valTomatoSeed(CurrTom),
             valPumpkinSeed(CurrPump),
             write(CurrCar), write(' carrot seed'),nl,
-            write(CurrCor), write(' corn seed'),nl,
             write(CurrPot), write(' potato seed'),nl,
+            write(CurrCor), write(' corn seed'),nl,
             write(CurrTom), write(' tomato seed'),nl,
             write(CurrPump), write(' pumpkin seed'),nl,
             write('What do you want to plant?'),nl,
@@ -344,7 +344,7 @@ checkFarmProduce(X) :-
     ),
     (
         Cor = 0 -> nl;
-        Cor > 0 -> checkCornProduction(CornEN,X,1)
+        Cor > 0 -> checkCornProduction(CorEN,X,1)
     ),
     (
         Pot = 0 -> nl;
