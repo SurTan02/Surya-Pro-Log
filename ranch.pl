@@ -192,20 +192,26 @@ checkRanchProduce(X) :-
 checkCowProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), incMilk(1);!
+            Left = 0, EN is 1000, incMilk(1);
+            Left < 0, EN is mod(Left,1000),incMilk(1);
+            Left > 0, EN is mod(Left,1000)
     ),
-    EN is mod(Left,1000), retractall(cowEN(_)), asserta(cowEN(EN)).
+    retractall(cowEN(_)), asserta(cowEN(EN)).
 
 checkSheepProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), incWool(1);!
+            Left = 0, EN is 600, incWool(1);
+            Left < 0, EN is mod(Left,600),incWool(1);
+            Left > 0, EN is mod(Left,600)
     ),
-    EN is mod(Left,600), retractall(sheepEN(_)), asserta(sheepEN(EN)).
+    retractall(sheepEN(_)), asserta(sheepEN(EN)).
 
 checkChickenProduction(H,X,ID) :- 
     Left is H-X,
     (
-        (Left =< 0), incEgg(1);!
+            Left = 0, EN is 300, incEgg(1);
+            Left < 0, EN is mod(Left,300),incEgg(1);
+            Left > 0, EN is mod(Left,300)
     ),
-    EN is mod(Left,300), retractall(chickenEN(_)), asserta(chickenEN(EN)).
+    retractall(chickenEN(_)), asserta(chickenEN(EN)).
