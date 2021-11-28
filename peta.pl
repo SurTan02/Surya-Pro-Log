@@ -59,6 +59,11 @@ marketPos(X,Y) :-
     X =:= A,
     Y =:= B.
 
+ diggedPos(X,Y) :-
+    diggedTile(A,B),
+    X =:= A,
+    Y =:= B.
+
 % waterTile(0,_).
 waterTile(X,_) :-
     X =:= 1.
@@ -87,10 +92,7 @@ writeElem(X,Y) :-
 	tembokBawah(X,Y),
 	write('#').
 
-writeElem(X,Y) :-
-	diggedTile(X,Y),
-	write('='),
-	writeElem(X+1,Y).
+
 
 %Rekurens penampilan peta
 writeElem(X,Y) :-
@@ -130,7 +132,10 @@ writeElem(X,Y) :-
 % 	write('o'),
 % 	writeElem(X+1,Y).
 
-
+writeElem(X,Y) :-
+	diggedPos(X,Y),
+	write('='),
+	writeElem(X+1,Y).
 writeElem(X,Y) :-
 	tembokBawah(X,Y),
 	write('#'),
