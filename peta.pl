@@ -87,6 +87,11 @@ writeElem(X,Y) :-
 	tembokBawah(X,Y),
 	write('#').
 
+writeElem(X,Y) :-
+	diggedTile(X,Y),
+	write('='),
+	writeElem(X+1,Y).
+
 %Rekurens penampilan peta
 writeElem(X,Y) :-
     \+tembokAtas(X,Y),
@@ -125,10 +130,6 @@ writeElem(X,Y) :-
 % 	write('o'),
 % 	writeElem(X+1,Y).
 
-writeElem(X,Y) :-
-	diggedTile(X,Y),
-	write('='),
-	writeElem(X+1,Y).
 
 writeElem(X,Y) :-
 	tembokBawah(X,Y),

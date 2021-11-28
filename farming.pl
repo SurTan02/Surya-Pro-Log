@@ -77,6 +77,7 @@ updateFromInventory :-
     ).
 
 dig :-
+    playerCoord(X,Y),
     (
         \+diggedTile(X,Y) ->
             playerCoord(X,Y),
@@ -86,8 +87,9 @@ dig :-
             asserta(playerCoord(X,YNOW)),
             write('Tile Digged!'),nl,write('+50 Player EXP'),nl, write('+50 Farming EXP'),
             earnEXPFarming(50),
-            earnEXPPlayer(50);
-
+            earnEXPPlayer(50),
+            spendEnergy(10);
+        
         write('Tile Already Digged')
     ).
 
@@ -119,6 +121,7 @@ plant :-
                         earnEXPPlayer(50),
                         earnEXPFarming(50),
                         deleteNItems(1,10),
+                        spendEnergy(10),
 
                         valCarrot(A),
                         RES is A+1,
@@ -136,6 +139,7 @@ plant :-
                         earnEXPPlayer(50),
                         earnEXPFarming(50),
                         deleteNItems(1,12),
+                        spendEnergy(10),
 
                         valCorn(A),
                         RES is A+1,
@@ -153,6 +157,7 @@ plant :-
                         earnEXPPlayer(50),
                         earnEXPFarming(50),
                         deleteNItems(1,11),
+                        spendEnergy(10),
 
                         valPotato(A),
                         RES is A+1,
@@ -173,6 +178,7 @@ plant :-
                                 earnEXPPlayer(50),
                                 earnEXPFarming(50),
                                 deleteNItems(1,13),
+                                spendEnergy(10),
 
                                 valTomato(A),
                                 RES is A+1,
@@ -197,6 +203,7 @@ plant :-
                                 earnEXPPlayer(50),
                                 earnEXPFarming(50),
                                 deleteNItems(1,14),
+                                spendEnergy(10),
 
                                 valPumpkin(A),
                                 RES is A+1,
