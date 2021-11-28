@@ -70,14 +70,18 @@ getChickenProduce :-
     A = 0 -> write('Your chciken has not produce any egg.'),nl,write('Please check again later.');
     
     write('Your chicken lays '), write(A), write(' eggs'),nl,write('You got '), write(A),write(' eggs!'),nl,
-    write('You gain 50 Exp Ranching'),nl,
-    write('You gain 50 Exp Player'),    
-    earnEXPRanching(50),
+    write('You gain 50 Exp!\n'),    
     earnEXPPlayer(50),
     addNtimes(A, 5)
     ),
     retractall(eggVal(_)),
-    asserta(eggVal(0)).
+    asserta(eggVal(0)),
+
+    levelRanching(LVLranch),
+    LVLranch <10, !,
+    write('You gained 50 ranching exp'),nl,
+    earnEXPRanching(50).
+
 
 getSheepProduce :-
     woolVal(A),
@@ -85,14 +89,17 @@ getSheepProduce :-
     A = 0 -> write('Your sheep has not produce any wool.'),nl,write('Please check again later.');
 
     write('Your sheep produce '), write(A), write(' wool'),nl,write('You got '), write(A),write(' wool!'),nl,
-    write('You gain 50 Exp Ranching'),nl,
-    write('You gain 50 Exp Player'),    
-    earnEXPRanching(50),
+    write('You gain 50 Exp!\n'),    
     earnEXPPlayer(50),
-    addNtimes(A, 6)
+    addNtimes(A, 5)
     ),
     retractall(woolVal(_)),
-    asserta(woolVal(0)).
+    asserta(woolVal(0)),
+
+    levelRanching(LVLranch),
+    LVLranch <10, !,
+    write('You gained 50 ranching exp'),nl,
+    earnEXPRanching(50).
 
 getCowProduce :-
     milkVal(A),
@@ -100,14 +107,17 @@ getCowProduce :-
     A = 0 -> write('Your cow has not produce any milk.'),nl,write('Please check again later.');
 
     write('Your cow produce '), write(A), write(' milk'),nl,write('You got '), write(A),write(' milk!'),nl,
-    write('You gain 50 Exp Ranching'),nl,
-    write('You gain 50 Exp Player'),    
-    earnEXPRanching(50),
+    write('You gain 50 Exp!\n'),    
     earnEXPPlayer(50),
-    addNtimes(A, 4)
+    addNtimes(A, 5)
     ),
     retractall(milkVal(_)),
-    asserta(milkVal(0)).
+    asserta(milkVal(0)),
+
+    levelRanching(LVLranch),
+    LVLranch <10, !,
+    write('You gained 50 ranching exp'),nl,
+    earnEXPRanching(50).
 
 incEgg(X) :-
     eggVal(A),

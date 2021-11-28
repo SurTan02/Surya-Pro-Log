@@ -23,8 +23,8 @@ job(rancher).
 job(fisherman).
 job(farmer).
 
-baseExp(100).
-baseEnergy(100).
+% baseExp(100).
+% baseEnergy(100).
 % # expForLevelUp = 100.
 
 reset :-
@@ -51,7 +51,7 @@ pilihJob(Job) :-
                 asserta(maxEnergy(150)),
                 firstLevel,
                 format('You choose ~w, let\'s start working', [Job]),nl, updatePrice,
-                showStat.
+                status.
 
 
 
@@ -116,7 +116,7 @@ gainEnergy(X) :-
 
 % exp untuk level up adalah 100,200,300,400....
 earnEXPPlayer(X):-
-    format('you gained ~w exp!',[X]), nl,
+    % format('you gained ~w exp!',[X]), nl,
     expPlayer(XP),
     levelPlayer(CurrLvl),
     NewXP is XP + X,
@@ -126,7 +126,7 @@ earnEXPPlayer(X):-
     naikLevelPlayer(Sisa).
     
 earnEXPPlayer(X):-
-    format('you gained ~w exp!',[X]), nl,
+    % format('you gained ~w exp!',[X]), nl,
     expPlayer(XP),
     NewXP is XP + X,
     retractall(expPlayer(_)), 
@@ -134,7 +134,7 @@ earnEXPPlayer(X):-
 
 
 earnEXPFishing(X):-
-    format('you gained ~w fishing exp!',[X]), nl,
+    % format('you gained ~w fishing exp!',[X]), nl,
     expFishing(XP),
     levelFishing(CurrLvlF),
     NewXP is XP + X,
@@ -144,13 +144,13 @@ earnEXPFishing(X):-
     
 
 earnEXPFishing(X):-
-    format('you gained ~w fishing exp!',[X]), nl,
+    % format('you gained ~w fishing exp!',[X]), nl,
     expFishing(XP),
     NewXP is XP + X,
     retractall(expFishing(_)), asserta(expFishing(NewXP)).
 
 earnEXPRanching(X):-
-    format('you gained ~w ranching exp!',[X]), nl,
+    % format('you gained ~w ranching exp!',[X]), nl,
     expRanching(XP),
     levelRanching(CurrLvlR),
     
@@ -160,13 +160,13 @@ earnEXPRanching(X):-
     naikLevelRanching(Sisa).
 
 earnEXPRanching(X):-
-    format('you gained ~w ranching exp!',[X]), nl,
+    % format('you gained ~w ranching exp!',[X]), nl,
     expRanching(XP),
     NewXP is XP + X,
     retractall(expRanching(_)), asserta(expRanching(NewXP)).
 
 earnEXPFarming(X):-
-    format('you gained ~w farming exp!',[X]), nl,
+    % format('you gained ~w farming exp!',[X]), nl,
     expFarming(XP),
     levelFarming(CurrLvlFa),
     NewXP is XP + X,
@@ -175,7 +175,7 @@ earnEXPFarming(X):-
     naikLevelFarming(Sisa).
 
 earnEXPFarming(X):-
-    format('you gained ~w farming exp!',[X]), nl,
+    % format('you gained ~w farming exp!',[X]), nl,
     expFarming(XP),
     NewXP is XP + X,
     retractall(expFarming(_)), asserta(expFarming(NewXP)).
@@ -254,7 +254,7 @@ naikLevelFarming(X) :-
     format('Your farming skill just advanced to level ~w!', [NewLVL]),nl,
     earnEXPFarming(X).
 
-showStat :-
+status :-
     maxEnergy(MaxE),
     (money(Money)),
     (energy(E)),
@@ -282,11 +282,23 @@ showStat :-
     format('Player Level    : ~w', [LVLP]),nl,
     format('Player Exp      : ~w/~w', [XPplayer,XPplayerNeeded]),nl,
     format('Fishing Level   : ~w', [LVLfish]),nl,
-    format('Fishing Exp     : ~w/~w', [XPfish,XPfishNeeded]),nl,
+    (
+        LVLfish < 10 -> format('Fishing Exp     : ~w/~w', [XPfish,XPfishNeeded]),nl;
+        LVLfish >= 10 -> write('Fishing Exp     :  MAX'),nl    
+    ),
     format('Ranching Level  : ~w', [LVLranch]),nl,
-    format('Ranching Exp    : ~w/~w', [XPranch,XPranchNeeded]),nl,
+    (
+        LVLranch < 10 -> format('Ranching Exp    : ~w/~w', [XPranch,XPranchNeeded]),nl;
+        LVLranch >= 10 -> write('Ranching Exp     :  MAX'),nl   
+
+    ),
     format('Farming Level   : ~w', [LVLfarm]),nl,
-    format('Farming Exp     : ~w/~w', [XPfarm,XPfarmNeeded]),nl,
+    (
+        LVLfarm < 10 -> format('Farming Exp     : ~w/~w', [XPfarm,XPfarmNeeded]),nl;
+        LVLfarm >= 10  -> write('Farming Exp     :  MAX'),nl
+
+    ),
+    
     format('Hasil Panen     : ~w', [Panen]),nl,
     format('Ranch Capacity  : ~w', [Ranch]),nl,
     format('Luck            : ~w', [Kehokian]),nl,
