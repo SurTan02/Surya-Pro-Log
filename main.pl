@@ -62,7 +62,7 @@ help :-
      write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n').
   
 
-start  :-
+startGame  :-
      write(' _   _                           _\n'),   
      write('| | | | __ _ _ ____   _____  ___| |_ \n'),   
      write('| |_| |/ _` | \'__\\ \\ / / _ \\/ __| __|\n'),   
@@ -72,27 +72,9 @@ start  :-
      write('Harvest Star!!!\n'),
      write('Let\'s play and pay our debts together!\n'),
                      
-               
-     write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-     write('%                                  MENU                                         %\n'),
-     write('%                                                                               %\n'),
-     write('%                                                                               %\n'),
-     write('% 1. start         : Start the game                                             %\n'),
-     write('% 2. exit          : Quit the game                                              %\n'),
-     write('%                                                                               %\n'),
-     write('%                                                                               %\n'),
-     write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'),
-     write('>>> '),
-     read(Choice), nl,
-     ( 
-          (Choice = start, startGame);
-          % (Choice = load, loadGame);
-          % (Choice = help, help);
-          (Choice = exit, halt)
-          % (write('Invalid command!\n'),menuAwal)
-     ).
+     help.
         
-startGame :- 
+start :- 
      reset,
      asserta(state(started)),
      initMap,
