@@ -23,18 +23,24 @@ market :-
     write('1. Buy'), nl,
     write('2. Sell'), nl,
     write('3. Exit'), nl,
+    write('Input a number to do action (ex: 1. to buy, 2. to sell, etc)'), nl,
+    write('>>>'),
     read(X), nl,
     ((X < 1 ; X > 3) -> 
-        write('Invalid input! choose 1 or 2'), nl, fail
+        write('Invalid input! choose 1/2/3'), nl, fail
     ; (X =:= 1) ->
-        write('What do you want to buy?'), nl,
+        write('**COMODITIES**'), nl,
         write('1. carrot seed (5 gold)'), nl,
         write('2. potato seed (7 gold)'), nl,
-        write('3. corn seed (12 gold) *need lvl 2 shovel to plant'), nl,
-        write('4. pumpkin seed (15 gold) *need lvl 3 shovel to plant'), nl,
-        write('5. chicken (500 gold)'), nl,
-        write('6. cow (2000 gold)'), nl,
-        write('7. sheep (1200 gold)'), nl, nl,
+        write('3. corn seed (9 gold)'), nl,
+        write('4. tomato seed (12 gold) *need lvl 2 shovel to plant'), nl,
+        write('5. pumpkin seed (15 gold) *need lvl 3 shovel to plant'), nl,
+        write('6. chicken (500 gold)'), nl,
+        write('7. cow (2000 gold)'), nl,
+        write('8. sheep (1200 gold)'), nl,nl,
+        write('**CONSUMABLES**'), nl,
+        write('- energyDrink (20 gold)'), nl,
+        write('- coffeBTS (30 gold)'), nl, nl,
         write('**EQUIPMENTS**'), nl,
         writeShovel,
         writeRod,
@@ -60,7 +66,7 @@ market :-
         
         ;   write('You don\'t have that item in your inventory'), nl, fail
         )
-    ;  write('Terimakasih sudah mengunjungi Store! :D'),nl,
+    ;  write('Thank you for visiting us!'),nl,
         retract(isInMarket(_)),!
     ).
 
