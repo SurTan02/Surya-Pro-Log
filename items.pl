@@ -40,7 +40,7 @@ item(28, shovel, 'level 3 shovel', equipment, 3, 0, 0, 150).
 item(29, fishingrod, 'level 1 fishing rod', equipment, 1, 0, 0, 50).
 item(30, fishingrod, 'level 2 fishing rod', equipment, 2, 0, 0, 100).
 item(31, fishingrod, 'level 3 fishing rod', equipment, 3, 0, 0, 150).
-item(32, boat, 'level 1  boat', equipment, 1, 0, 0, 200).
+item(32, boat, 'level 1 boat', equipment, 1, 0, 0, 200).
 item(33, boat, 'level 2 boat', equipment, 2, 0, 0, 300).
 item(34, boat, 'level 3 boat', equipment, 3, 0, 0, 400).
 

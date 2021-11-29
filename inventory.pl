@@ -11,7 +11,12 @@
 % myInventory(23, energy_drink, 'energyDrink', consumable, 0, 0, 50, 20, 3).
 
 myInventory(26, shovel, 'level 1 shovel', equipment, 1, 0, 0, 50, 1).
+% myInventory(27, shovel, 'level 2 shovel', equipment, 2, 0, 0, 60, 1).
 myInventory(29, fishingrod, 'level 1 fishing rod', equipment, 1, 0, 0, 50, 1).
+% myInventory(32, boat, 'level 1 boat', equipment, 1, 0, 0, 200, 1).
+% myInventory(33, boat, 'level 2 boat', equipment, 2, 0, 0, 300, 1).
+% myInventory(34, boat, 'level 3 boat', equipment, 3, 0, 0, 400, 1).
+
 
 updatePrice :-
     job(Job),

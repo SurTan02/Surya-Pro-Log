@@ -52,6 +52,52 @@ s :-
     tembokBawah(X,YNOW),
     write('You Hit a Wall!'), nl,!.
 
+
+a :- 
+    playerCoord(X,Y),
+    XNOW is X-1,
+    tembokKiri(XNOW,Y),
+    write('You Hit a Wall!'),  nl,!.
+
+ a :-
+    playerCoord(X,Y),
+    XNOW is X-1,
+    \+tembokKiri(XNOW,Y),
+    XNOW < 3,
+    (
+        insideMyInventory('level 3 boat') ->
+        retract(playerCoord(_,_)),
+        asserta(playerCoord(XNOW,Y)),
+        write('You sail one step to the left'), nl,!
+    ;   write('Buy a level 3 boat to sail much further'), nl, !
+    ).
+
+ a :-
+    playerCoord(X,Y),
+    XNOW is X-1,
+    \+tembokKiri(XNOW,Y),
+    XNOW < 5,
+    (
+        insideMyInventory('level 2 boat') ->
+        retract(playerCoord(_,_)),
+        asserta(playerCoord(XNOW,Y)),
+        write('You sail one step to the left'), nl,!
+    ;   write('Buy a level 2 boat to sail much further'), nl, !
+    ).
+
+ a :-
+    playerCoord(X,Y),
+    XNOW is X-1,
+    \+tembokKiri(XNOW,Y),
+    XNOW < 6,
+    (
+        insideMyInventory('level 1 boat') ->
+        retract(playerCoord(_,_)),
+        asserta(playerCoord(XNOW,Y)),
+        write('You sail one step to the left'), nl,!
+    ;   write('Buy a level 1 boat to sail much further'), nl, !
+    ).
+
  a :-
     playerCoord(X,Y),
     XNOW is X-1,
@@ -68,11 +114,5 @@ s :-
 a :- 
     playerCoord(X,Y),
     XNOW is X-1,
-    tembokKiri(XNOW,Y),
-    write('You Hit a Wall!'),  nl,!.
-
-a :- 
-    playerCoord(X,Y),
-    XNOW is X-1,
     waterTile(XNOW,Y),
-    write('You are not Naruto, you can\'t walk on water!'),  nl,!.
+    write('Buy a boat to explore the waters!'),  nl,!.

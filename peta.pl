@@ -96,16 +96,18 @@ writeElem(X,Y) :-
 
 %Rekurens penampilan peta
 writeElem(X,Y) :-
+	playerPosition(X,Y),
+	write('P'),
+	writeElem(X+1,Y).
+
+writeElem(X,Y) :-
     \+tembokAtas(X,Y),
     \+tembokBawah(X,Y),
 	waterTile(X,Y),
 	write('o'),
 	writeElem(X+1,Y).
 
-writeElem(X,Y) :-
-	playerPosition(X,Y),
-	write('P'),
-	writeElem(X+1,Y).
+
 
 writeElem(X,Y) :-
 	housePos(X,Y),
@@ -222,12 +224,12 @@ legenda :-
     ranchCoord(E,F),
     houseCoord(G,H),
     playerCoord(I,J),
-    write('LEGENDS\t\t(X,Y)'), nl, nl,
-    write('M\t: Marketplace\t('), write(A), write(','), write(B), write(')'), nl,
-    write('P\t: You\t('), write(I), write(','), write(J), write(')'), nl,
-    write('R\t: Ranch\t('), write(E), write(','), write(F), write(')'), nl,
-    write('H\t: House\t('), write(G), write(','), write(H), write(')'), nl,
-    write('Q\t: Quest\t('), write(C), write(','), write(D), write(')'), nl,
+    write('LEGENDS                                      (X,Y)'), nl, nl,
+    write('M\t: Marketplace                        ('), write(A), write(','), write(B), write(')'), nl,
+    write('P\t: You                                ('), write(I), write(','), write(J), write(')'), nl,
+    write('R\t: Ranch                              ('), write(E), write(','), write(F), write(')'), nl,
+    write('H\t: House                              ('), write(G), write(','), write(H), write(')'), nl,
+    write('Q\t: Quest                              ('), write(C), write(','), write(D), write(')'), nl,
     write('o\t: Water (fish here!)'), nl,
     write('=\t: Digged Tile'), nl,!.
 
