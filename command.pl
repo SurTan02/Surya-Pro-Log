@@ -117,11 +117,11 @@ a :-
     waterTile(XNOW,Y),
     write('Buy a boat to explore the waters!'),  nl,!.
 
-harvest :-
+harvestInfo  :-
     nl,
     eggVal(Egg),
     milkVal(Milk),
-    woolVal(Woll),
+    woolVal(Wool),
     valCar(Carrot),
     valPotato(Potato),
     valCorn(Corn),
