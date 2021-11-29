@@ -5,7 +5,7 @@
 % money(10000).
 maxDay(365).
 maxMoney(20000).
-day(364).
+day(1).
 season(spring).
 
 addDay :-
