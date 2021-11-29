@@ -13,6 +13,7 @@
 :- include('gamestats.pl').
 :- include('ranch.pl').
 :- include('farming.pl').
+:- include('banner.pl').
 
 :- dynamic(state/1).
 % :- dynamic(day/1).

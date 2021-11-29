@@ -57,7 +57,7 @@ checkGoalMoney :-
     goalState.
 
 goalState :-
-    write('selamat kamu menang!'), !.
+    win_screen, !.
 
 failState :-
-    write('kamu kalah!'), !.
+    lose_screen, !.

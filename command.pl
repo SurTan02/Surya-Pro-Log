@@ -116,3 +116,25 @@ a :-
     XNOW is X-1,
     waterTile(XNOW,Y),
     write('Buy a boat to explore the waters!'),  nl,!.
+
+harvest :-
+    nl,
+    eggVal(Egg),
+    milkVal(Milk),
+    woolVal(Woll),
+    valCar(Carrot),
+    valPotato(Potato),
+    valCorn(Corn),
+    valTom(Tomat),
+    valPump(Pumpkin),
+    write('****YOUR HARVEST INFO****'), nl,
+    write('--------------------------------------RANCH----------------------------------------'), nl,
+    write('Egg:                 '), write(Egg), write(' egg ready to harvest!'), nl,
+    write('Wool:                '), write(Wool), write(' wool ready to harvest!'), nl,
+    write('Milk:                '), write(Milk), write(' milk ready to harvest!'), nl,
+    write('---------------------------------------FARM-----------------------------------------'), nl,
+    write('Carrot:              '), write(Carrot), write(' carrot ready to harvest!'), nl,
+    write('Corn:                '), write(Corn), write(' corn ready to harvest!'), nl,
+    write('Potato:              '), write(Potato), write(' potato ready to harvest!'), nl,       
+    write('Tomato:              '), write(Tomat), write(' tomato ready to harvest!'), nl,
+    write('Pumpkin:             '), write(Pumpkin), write(' pumpkin ready to harvest!'), nl,!.

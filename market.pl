@@ -86,33 +86,33 @@ writeShovel :-
 writeShovel :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(27, ListID),
-    write('- Level 3 shovel (150 Golds)'), nl.
+    write('- level 3 shovel (150 Golds)'), nl.
 writeShovel :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(26, ListID),
-    write('- Level 2 shovel (100 Golds)'), nl.
+    write('- level 2 shovel (100 Golds)'), nl.
 writeShovel :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     \+isInInventory(26, ListID),
-    write('- Level 1 shovel (50 Golds)'), nl.
+    write('- level 1 shovel (50 Golds)'), nl.
 
 
 writeRod :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(31, ListID),
-    write('- Fishing Rod is at MAX Level'), nl.
+    write('- Fishing Rod is at MAX level'), nl.
 writeRod :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(30, ListID),
-    write('- Level 3 fishing rod (150 Golds)'), nl.
+    write('- level 3 fishing rod (150 Golds)'), nl.
 writeRod :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(29, ListID),
-    write('- Level 2 fishing rod (100 Golds)'), nl.
+    write('- level 2 fishing rod (100 Golds)'), nl.
 writeRod :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     \+isInInventory(29, ListID),
-    write('- Level 1 fishing rod (50 Golds)'), nl.
+    write('- level 1 fishing rod (50 Golds)'), nl.
 
 
 
@@ -123,19 +123,19 @@ writeRod :-
 writeBoat :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(34, ListID),
-    write('- Boat is at MAX Level'), nl.
+    write('- Boat is at MAX level'), nl.
 writeBoat :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(33, ListID),
-    write('- Level 3 boat (300 Golds)'), nl.
+    write('- level 3 boat (300 Golds)'), nl.
 writeBoat :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     isInInventory(32, ListID),
-    write('- Level 2 boat (300 Golds)'), nl.
+    write('- level 2 boat (300 Golds)'), nl.
 writeBoat :-
     findall(InvID, myInventory(InvID,_, _,_,_,_,_,_,_), ListID),
     \+isInInventory(32, ListID),
-    write('- Level 1 boat (200 Golds)'), nl.
+    write('- level 1 boat (200 Golds)'), nl.
 
 
 
