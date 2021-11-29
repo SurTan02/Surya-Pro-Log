@@ -58,7 +58,7 @@ help :-
      write('% 15. sleep        : Sleep                                                      %\n'),
      write('% 16. house        : Go to House                                                %\n'),
      write('% 17. harvestInfo  : See harvest progress                                       %\n'),
-     write('% 16. exit         : Quit the game                                              %\n'),
+     write('% 18. exit         : Quit the game                                              %\n'),
      write('%                                                                               %\n'),
      write('%                                                                               %\n'),
      write('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n').
