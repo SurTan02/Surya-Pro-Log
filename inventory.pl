@@ -18,22 +18,23 @@ myInventory(29, fishingrod, 'level 1 fishing rod', equipment, 1, 0, 0, 50, 1).
 % myInventory(34, boat, 'level 3 boat', equipment, 3, 0, 0, 400, 1).
 
 
-updatePrice :-
-    job(Job),
+updatePrice(Job) :-
+% trace,
+%     jobPlayer(Job),
     (
-        (Job == rancher) ->
+        (Job = rancher) ->
         retractall(item(_,_,_,rancherProd,_,_,_,_)),
         asserta(item(4, milk, 'milk', rancherProd, 0, 1000, 0, 60)),
         asserta(item(5, egg, 'egg', rancherProd, 0, 300, 0, 15)),
         asserta(item(6, wool, 'wool', rancherProd, 0, 600, 0, 30))
-    ;   (Job == farmer) ->
+    ;   (Job = farmer) ->
         retractall(item(_,_,_,farmerProd,_,_,_,_)),
         asserta(item(15, carrot, 'carrot', farmerProd, 0, 150, 0, 15)),
         asserta(item(16, potato, 'potato', farmerProd, 0, 175, 0, 21)),
         asserta(item(17, corn, 'corn', farmerProd, 0, 450, 0, 27)),
         asserta(item(18, tomato, 'tomato', farmerProd, 0, 800, 0, 37)),
         asserta(item(19, pumpkin, 'pumpkin', farmerProd, 0, 1000, 0, 52))
-    ;   (Job == fisherman) ->
+    ;   (Job = fisherman) ->
         asserta(item(20, betutu_fish, 'betutu fish', fisherman, 0, 0, 0, 60)),
         asserta(item(21, gurame_fish, 'gurame fish', fisherman, 0, 0, 0, 30)),
         asserta(item(22, teri_fish, 'teri fish', fisherman, 0, 0, 0, 7))

@@ -5,7 +5,7 @@
 % money(10000).
 maxDay(365).
 maxMoney(20000).
-day(1).
+day(364).
 season(spring).
 
 addDay :-
@@ -17,7 +17,7 @@ addDay :-
     maxDay(MaxDay),
     NextDay is D + 1,
     (
-        (NextDay >= MaxDay) ->
+        (NextDay > MaxDay) ->
         money(PlayerMoney),
         maxMoney(MaxMoney),
         (
@@ -57,7 +57,13 @@ checkGoalMoney :-
     goalState.
 
 goalState :-
-    win_screen, !.
+    win_screen,exit.
+    % write('Press Anything to end the game\n'),
+    % read(_),
+    % halt.
 
 failState :-
-    lose_screen, !.
+    lose_screen,exit.
+    % write('Press Anything to end the game\n'),
+    % read(_),
+    % halt.
