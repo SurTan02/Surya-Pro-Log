@@ -278,7 +278,7 @@ harvest :-
 getCarrotProduce :-
     valCar(A),
     (
-    A = 0 -> write('Your carrot plant has not produce any carrot.'),nl,write('Please check again later.');
+    A = 0 -> write('Your carrot plant has not produce any carrot.'),nl,write('Please check again later.'),fail;
     
     write('Your carrot plant produced '), write(A), write(' carrots'),nl,write('You got '), write(A),write(' carrots!'),nl,
     write('You gain 50 Exp Player'),    
@@ -297,7 +297,7 @@ getCarrotProduce :-
 getPotatoProduce :-
     valPot(A),
     (
-    A = 0 -> write('Your potato plant has not produce any potato.'),nl,write('Please check again later.');
+    A = 0 -> write('Your potato plant has not produce any potato.'),nl,write('Please check again later.'),fail;
     
     write('Your potato plant produced '), write(A), write(' potatos'),nl,write('You got '), write(A),write(' potatos!'),nl,
     write('You gain 50 Exp Player'),    
@@ -315,7 +315,7 @@ getPotatoProduce :-
 getCornProduce :-
     valCor(A),
     (
-    A = 0 -> write('Your corn plant has not produce any corn.'),nl,write('Please check again later.');
+    A = 0 -> write('Your corn plant has not produce any corn.'),nl,write('Please check again later.'),fail;
     
     write('Your corn plant produced '), write(A), write(' corns'),nl,write('You got '), write(A),write(' corns!'),nl,
     write('You gain 50 Exp Player'),    
@@ -333,7 +333,7 @@ getCornProduce :-
 getTomatoProduce :-
     valTom(A),
     (
-    A = 0 -> write('Your tomato plant has not produce any tomato.'),nl,write('Please check again later.');
+    A = 0 -> write('Your tomato plant has not produce any tomato.'),nl,write('Please check again later.'),fail;
     
     write('Your tomato plant produced '), write(A), write(' tomatos'),nl,write('You got '), write(A),write(' tomatos!'),nl,
     write('You gain 50 Exp Player'),    
@@ -351,7 +351,7 @@ getTomatoProduce :-
 getPumpkinProduce :-
     valPump(A),
     (
-    A = 0 -> write('Your pumpkin plant has not produce any pumpkin.'),nl,write('Please check again later.');
+    A = 0 -> write('Your pumpkin plant has not produce any pumpkin.'),nl,write('Please check again later.'),fail;
     
     write('Your pumpkin plant produced '), write(A), write(' pumpkins'),nl,write('You got '), write(A),write(' pumpkins!'),nl,
     write('You gain 50 Exp Player'),    
