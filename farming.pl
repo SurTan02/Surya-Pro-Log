@@ -77,6 +77,7 @@ updateFromInventory :-
     ).
 
 dig :-
+    checkEnergy(10,1),
     playerCoord(X,Y),
     (
         \+diggedTile(X,Y) ->
@@ -85,15 +86,22 @@ dig :-
             YNOW is Y-1,
             retractall(playerCoord(_,_)),
             asserta(playerCoord(X,YNOW)),
-            write('Tile Digged!'),nl,write('+50 Player EXP'),nl, write('+50 Farming EXP'),
-            earnEXPFarming(50),
+            write('Tile Digged!'),nl,write('+50 Player EXP'),nl,
+            
             earnEXPPlayer(50),
-            spendEnergy(10);
-        
+            spendEnergy(10),
+
+            levelFarming(LVLfarm),
+            LVLfarm <10, !,
+            write('You gained 50 Farming exp'),nl,
+            earnEXPFarming(50);
+
+
         write('Tile Already Digged')
     ).
 
 plant :-
+    checkEnergy(10,1),
     updateFromInventory,
     playerCoord(X,Y),
     (
@@ -118,16 +126,20 @@ plant :-
 
                         write('Carrot seed planted!'),nl,
                         write('+50 EXP Player'),nl,
-                        write('+50 EXP Farming'),nl,
                         earnEXPPlayer(50),
-                        earnEXPFarming(50),
                         deleteNItems(1,10),
                         spendEnergy(10),
 
                         valCarrot(A),
                         RES is A+1,
                         retractall(valCarrot(_)),
-                        asserta(valCarrot(RES))
+                        asserta(valCarrot(RES)),
+
+
+                        levelFarming(LVLfarm),
+                        LVLfarm <10, !,
+                        write('You gained 50 Farming exp'),nl,
+                        earnEXPFarming(50)
                     );
 
                 Choice = corn ->
@@ -136,16 +148,19 @@ plant :-
                         
                         write('Corn seed planted!'),nl,
                         write('+50 EXP Player'),nl,
-                        write('+50 EXP Farming'),nl,
                         earnEXPPlayer(50),
-                        earnEXPFarming(50),
                         deleteNItems(1,12),
                         spendEnergy(10),
 
                         valCorn(A),
                         RES is A+1,
                         retractall(valCorn(_)),
-                        asserta(valCorn(RES))
+                        asserta(valCorn(RES)),
+                        
+                        levelFarming(LVLfarm),
+                        LVLfarm <10, !,
+                        write('You gained 50 Farming exp'),nl,
+                        earnEXPFarming(50)
                     );
 
                 Choice = potato ->
@@ -154,16 +169,19 @@ plant :-
                         
                         write('Potato seed planted!'),nl,
                         write('+50 EXP Player'),nl,
-                        write('+50 EXP Farming'),nl,
                         earnEXPPlayer(50),
-                        earnEXPFarming(50),
                         deleteNItems(1,11),
                         spendEnergy(10),
 
                         valPotato(A),
                         RES is A+1,
                         retractall(valPotato(_)),
-                        asserta(valPotato(RES))
+                        asserta(valPotato(RES)),
+
+                        levelFarming(LVLfarm),
+                        LVLfarm <10, !,
+                        write('You gained 50 Farming exp'),nl,
+                        earnEXPFarming(50)
                     );
 
                 Choice = tomato ->
@@ -175,16 +193,20 @@ plant :-
                             isInInventory(27,ListID) -> 
                                 write('Tomato seed planted!'),nl,
                                 write('+50 EXP Player'),nl,
-                                write('+50 EXP Farming'),nl,
                                 earnEXPPlayer(50),
-                                earnEXPFarming(50),
                                 deleteNItems(1,13),
                                 spendEnergy(10),
 
                                 valTomato(A),
                                 RES is A+1,
                                 retractall(valTomato(_)),
-                                asserta(valTomato(RES));
+                                asserta(valTomato(RES)),
+                                
+                                levelFarming(LVLfarm),
+                                LVLfarm <10, !,
+                                write('You gained 50 Farming exp'),nl,
+                                earnEXPFarming(50);
+                                
                             
                             write('Shovel Level 2 Needed'),nl
                         )
@@ -200,16 +222,20 @@ plant :-
                             isInInventory(28,ListID) -> 
                                 write('Pumpkin seed planted!'),nl,
                                 write('+50 EXP Player'),nl,
-                                write('+50 EXP Farming'),nl,
                                 earnEXPPlayer(50),
-                                earnEXPFarming(50),
                                 deleteNItems(1,14),
                                 spendEnergy(10),
 
                                 valPumpkin(A),
                                 RES is A+1,
                                 retractall(valPumpkin(_)),
-                                asserta(valPumpkin(RES));
+                                asserta(valPumpkin(RES)),
+                                
+                                levelFarming(LVLfarm),
+                                LVLfarm <10, !,
+                                write('You gained 50 Farming exp'),nl,
+                                earnEXPFarming(50);
+                                
                             
                             write('Shovel Level 3 Needed'),nl
                         )
@@ -255,14 +281,18 @@ getCarrotProduce :-
     A = 0 -> write('Your carrot plant has not produce any carrot.'),nl,write('Please check again later.');
     
     write('Your carrot plant produced '), write(A), write(' carrots'),nl,write('You got '), write(A),write(' carrots!'),nl,
-    write('You gain 50 Exp Farming'),nl,
     write('You gain 50 Exp Player'),    
-    earnEXPFarming(50),
     earnEXPPlayer(50),
     addNtimes(A, 15)
     ),
     retractall(valCar(_)),
-    asserta(valCar(0)).
+    asserta(valCar(0)),
+
+
+    levelFarming(LVLfarm),
+    LVLfarm <10, !,
+    write('You gained 50 Farming exp'),nl,
+    earnEXPFarming(50).
 
 getPotatoProduce :-
     valPot(A),
@@ -270,14 +300,17 @@ getPotatoProduce :-
     A = 0 -> write('Your potato plant has not produce any potato.'),nl,write('Please check again later.');
     
     write('Your potato plant produced '), write(A), write(' potatos'),nl,write('You got '), write(A),write(' potatos!'),nl,
-    write('You gain 50 Exp Farming'),nl,
     write('You gain 50 Exp Player'),    
-    earnEXPFarming(50),
     earnEXPPlayer(50),
     addNtimes(A, 16)
     ),
     retractall(valPot(_)),
-    asserta(valPot(0)).
+    asserta(valPot(0)),
+
+    levelFarming(LVLfarm),
+    LVLfarm <10, !,
+    write('You gained 50 Farming exp'),nl,
+    earnEXPFarming(50).
 
 getCornProduce :-
     valCor(A),
@@ -285,14 +318,17 @@ getCornProduce :-
     A = 0 -> write('Your corn plant has not produce any corn.'),nl,write('Please check again later.');
     
     write('Your corn plant produced '), write(A), write(' corns'),nl,write('You got '), write(A),write(' corns!'),nl,
-    write('You gain 50 Exp Farming'),nl,
     write('You gain 50 Exp Player'),    
-    earnEXPFarming(50),
     earnEXPPlayer(50),
     addNtimes(A, 17)
     ),
     retractall(valCor(_)),
-    asserta(valCor(0)).
+    asserta(valCor(0)),
+
+    levelFarming(LVLfarm),
+    LVLfarm <10, !,
+    write('You gained 50 Farming exp'),nl,
+    earnEXPFarming(50).
 
 getTomatoProduce :-
     valTom(A),
@@ -300,14 +336,17 @@ getTomatoProduce :-
     A = 0 -> write('Your tomato plant has not produce any tomato.'),nl,write('Please check again later.');
     
     write('Your tomato plant produced '), write(A), write(' tomatos'),nl,write('You got '), write(A),write(' tomatos!'),nl,
-    write('You gain 50 Exp Farming'),nl,
     write('You gain 50 Exp Player'),    
-    earnEXPFarming(50),
     earnEXPPlayer(50),
     addNtimes(A, 18)
     ),
     retractall(valTom(_)),
-    asserta(valTom(0)).
+    asserta(valTom(0)),
+
+    levelFarming(LVLfarm),
+    LVLfarm <10, !,
+    write('You gained 50 Farming exp'),nl,
+    earnEXPFarming(50).
 
 getPumpkinProduce :-
     valPump(A),
@@ -315,14 +354,17 @@ getPumpkinProduce :-
     A = 0 -> write('Your pumpkin plant has not produce any pumpkin.'),nl,write('Please check again later.');
     
     write('Your pumpkin plant produced '), write(A), write(' pumpkins'),nl,write('You got '), write(A),write(' pumpkins!'),nl,
-    write('You gain 50 Exp Farming'),nl,
     write('You gain 50 Exp Player'),    
-    earnEXPFarming(50),
     earnEXPPlayer(50),
     addNtimes(A, 19)
     ),
     retractall(valPump(_)),
-    asserta(valPump(0)).
+    asserta(valPump(0)),
+
+    levelFarming(LVLfarm),
+    LVLfarm <10, !,
+    write('You gained 50 Farming exp'),nl,
+    earnEXPFarming(50).
 
 
 %everytime energies are spent, call this to update
@@ -339,24 +381,24 @@ checkFarmProduce(X) :-
     tomatoEN(TomEN),
     pumpkinEN(PumEN),
     (
-        Car = 0 -> nl;
-        Car > 0 -> checkCarrotProduction(CarEN,X,1)
+        Car > 0 -> checkCarrotProduction(CarEN,X,1);
+        !
     ),
     (
-        Cor = 0 -> nl;
-        Cor > 0 -> checkCornProduction(CorEN,X,1)
+        Cor > 0 -> checkCornProduction(CorEN,X,1);
+        !
     ),
     (
-        Pot = 0 -> nl;
-        Pot > 0 -> checkPotatoProduction(PotEN,X,1)
+        Pot > 0 -> checkPotatoProduction(PotEN,X,1);
+        !
     ),
     (
-        Tom = 0 -> nl;
-        Tom > 0 -> checkTomatoProduction(TomEN,X,1)
+        Tom > 0 -> checkTomatoProduction(TomEN,X,1);
+        !
     ),
     (
-        Pump = 0 -> nl;
-        Tom > 0 -> checkPotatoProduction(PumEN,X,1)
+        Pump > 0 -> checkPotatoProduction(PumEN,X,1);
+        !
     ).
     
 
@@ -397,7 +439,7 @@ incPumpkin(X) :-
 
 
 % increase produce every X spend energy
-checkCarrotProduction(H,X,ID) :-
+checkCarrotProduction(H,X,_) :-
     Left is H-X,
     (
         Left = 0, EN is 150, incCarrot(1);
@@ -406,7 +448,7 @@ checkCarrotProduction(H,X,ID) :-
     ),
     retractall(carrotEN(_)), asserta(carrotEN(EN)).
 
-checkCornProduction(H,X,ID) :- 
+checkCornProduction(H,X,_) :- 
     Left is H-X,
     (
         Left = 0, EN is 450, incCorn(1);
@@ -415,7 +457,7 @@ checkCornProduction(H,X,ID) :-
     ),
     retractall(cornEN(_)), asserta(cornEN(EN)).
 
-checkPotatoProduction(H,X,ID) :- 
+checkPotatoProduction(H,X,_) :- 
     Left is H-X,
     (
         Left = 0, EN is 175, incPotato(1);
@@ -424,7 +466,7 @@ checkPotatoProduction(H,X,ID) :-
     ),
     retractall(potatoEN(_)), asserta(potatoEN(EN)).
 
-checkTomatoProduction(H,X,ID) :-
+checkTomatoProduction(H,X,_) :-
     Left is H-X,
     (
         Left = 0, EN is 800, incTomato(1);
@@ -433,7 +475,7 @@ checkTomatoProduction(H,X,ID) :-
     ),
     retractall(tomatoEN(_)), asserta(tomatoEN(EN)).
 
-checkPumpkinProduction(H,X,ID) :-
+checkPumpkinProduction(H,X,_) :-
     Left is H-X,
     (
         Left = 0, EN is 1000, incPumpkin(1);

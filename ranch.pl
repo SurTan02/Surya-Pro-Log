@@ -184,22 +184,22 @@ checkRanchProduce(X) :-
     sheepEN(SheepEN),
     chickenEN(ChickenEN),
     (
-        VCow = 0 -> nl;
-        VCow > 0 -> checkCowProduction(CowEN,X,1)
+        VCow > 0 -> checkCowProduction(CowEN,X,1);
+        !
     ),
     (
-        VChick = 0 -> nl;
-        VChick > 0 -> checkChickenProduction(ChickenEN,X,1)
+        VChick > 0 -> checkChickenProduction(ChickenEN,X,1);
+        !
     ),
     (
-        VSheep = 0 -> nl;
-        VSheep > 0 -> checkSheepProduction(SheepEN,X,1)
+        VSheep > 0 -> checkSheepProduction(SheepEN,X,1);
+        !
     ).
     
 
 
 % increase produce every X spend energy
-checkCowProduction(H,X,ID) :- 
+checkCowProduction(H,X,_) :- 
     Left is H-X,
     (
             Left = 0, EN is 1000, incMilk(1);
@@ -208,7 +208,7 @@ checkCowProduction(H,X,ID) :-
     ),
     retractall(cowEN(_)), asserta(cowEN(EN)).
 
-checkSheepProduction(H,X,ID) :- 
+checkSheepProduction(H,X,_) :- 
     Left is H-X,
     (
             Left = 0, EN is 600, incWool(1);
@@ -217,7 +217,7 @@ checkSheepProduction(H,X,ID) :-
     ),
     retractall(sheepEN(_)), asserta(sheepEN(EN)).
 
-checkChickenProduction(H,X,ID) :- 
+checkChickenProduction(H,X,_) :- 
     Left is H-X,
     (
             Left = 0, EN is 300, incEgg(1);

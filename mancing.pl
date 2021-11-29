@@ -7,7 +7,7 @@ checkEnergy(X,Y):-
     energy(Eawal),
     Eakhir is Eawal - X,
     Eakhir < 0,
-    Y = 1, write('You don\'t have enough energy to do this task!'),nl,
+    Y = 1, write('You don\'t have enough energy to do this task!\n'),
     fail,!. 
 
 spendEnergy(X) :-
@@ -18,7 +18,7 @@ spendEnergy(X) :-
     checkRanchProduce(X),
     checkFarmProduce(X),
     % format('Your energy ~w',[Eakhir]), nl,
-    (Eakhir =< 0 -> write('You have run out of energy and magically sleep in your house'), forceSleep;!).
+    (Eakhir =< 0 -> write('You have run out of energy and magically sleep in your house\n'), forceSleep;!).
 
     
 % _X adalah Bilangan Random untuk menentukan ikan yang didapatkan
@@ -43,10 +43,12 @@ fish :-
 
     spendEnergy(8),
     earnEXPPlayer(20),
+    write('You gained 20 fishing exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 20 fishing exp'),nl,
     earnEXPFishing(20).
 
 % Kasus mendapatkan Ikan Grade Menengah (Gurame Fish). 
@@ -68,10 +70,12 @@ fish :-
 
     spendEnergy(8),
     earnEXPPlayer(15),
+    write('You gained 15 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 15 fishing exp'),nl,
     earnEXPFishing(15).
 
 % Kasus mendapatkan Ikan Grade Rendah (Teri Fish). 
@@ -94,10 +98,12 @@ fish :-
 
     spendEnergy(8),  
     earnEXPPlayer(10),
+    write('You gained 10 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 10 fishing exp'),nl,
     earnEXPFishing(10).
 
 
@@ -118,10 +124,12 @@ fish :-
 
     spendEnergy(8),
     earnEXPPlayer(20),
+    write('You gained 20 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 20 Fishing exp'),nl,
     earnEXPFishing(20).
 
 % Kasus mendapatkan Ikan Grade Menengah (Gurame Fish). 
@@ -143,10 +151,12 @@ fish :-
 
     spendEnergy(8),
     earnEXPPlayer(15),
+    write('You gained 15 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 15 Fishing exp'),nl,
     earnEXPFishing(15).
 
 % Kasus mendapatkan Ikan Grade Rendah (Teri Fish). 
@@ -169,10 +179,12 @@ fish :-
 
     spendEnergy(8),  
     earnEXPPlayer(10),
+    write('You gained 10 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 10 Fishing exp'),nl,
     earnEXPFishing(10).
 
 
@@ -193,10 +205,12 @@ fish :-
 
     spendEnergy(8),
     earnEXPPlayer(20),
+    write('You gained 20 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 20 Fishing exp'),nl,
     earnEXPFishing(20).
 
 % Kasus mendapatkan Ikan Grade Menengah (Gurame Fish). 
@@ -218,10 +232,12 @@ fish :-
 
     spendEnergy(8),
     earnEXPPlayer(15),
+    write('You gained 15 exp'),nl,
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 15 Fishing exp'),nl,
     earnEXPFishing(15).
 
 % Kasus mendapatkan Ikan Grade Rendah (Teri Fish). 
@@ -243,11 +259,13 @@ fish :-
     addToInventory(22),
 
     spendEnergy(8),  
+    write('You gained 10 exp'),nl,
     earnEXPPlayer(10),
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 10 Fishing exp'),nl,
     earnEXPFishing(10).
 
 fish :-
@@ -273,11 +291,13 @@ fish :-
     addToInventory(20),
 
     spendEnergy(8),
+    write('You gained 20 exp'),nl,
     earnEXPPlayer(20),
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 20 Fishing exp'),nl,
     earnEXPFishing(20).
 
 % Kasus mendapatkan Ikan Grade Menengah (Gurame Fish). 
@@ -297,11 +317,13 @@ fish :-
     addToInventory(21),
 
     spendEnergy(8),
+    write('You gained 15 exp'),nl,
     earnEXPPlayer(15),
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 15 Fishing exp'),nl,
     earnEXPFishing(15).
 
 % Kasus mendapatkan Ikan Grade Rendah (Teri Fish). 
@@ -322,11 +344,13 @@ fish :-
     addToInventory(22),
 
     spendEnergy(8),  
+    write('You gained 10 exp'),nl,
     earnEXPPlayer(10),
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 10 Fishing exp'),nl,
     earnEXPFishing(10).
 
 % Kasus Tidak dapat ikan. 
@@ -334,12 +358,17 @@ fish :-
     checkEnergy(8,0),
     write('You didn\'t get anything!'),nl,
     spendEnergy(8),
+    write('You gained 5 exp'),nl,
     earnEXPPlayer(5),
 
     % Level Specialty dibatasi 10
     levelFishing(LVLfish),
     LVLfish <10, !,
+    write('You gained 5 Fishing exp'),nl,
     earnEXPFishing(5).
+
+
+    
 
     
         
