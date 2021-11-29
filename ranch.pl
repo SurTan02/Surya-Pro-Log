@@ -47,7 +47,13 @@ resetRanchVal :-
     retractall(chicken(_,_)),
     retractall(cow(_,_)),
     retractall(sheep(_,_)).
-    
+
+ranch :-
+    playerCoord(X,Y),
+    \+ranchCoord(X,Y),
+    write('Go to Ranch (R) to access this command!'),nl,
+    !,fail.
+
 ranch :-
     write('Welcome to the ranch! You have :'),nl,
     valChicken(CurrCh),
