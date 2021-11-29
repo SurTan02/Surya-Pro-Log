@@ -48,6 +48,7 @@ market :-
         writeSpecial,
         write('Write the name of the item that you want to buy'), nl,
         write('example: \'carrot seed\', to buy carrot seed. '), nl,
+        write('>>>'), 
         read(ItemName), nl,
         write('How much did you want to buy?'), nl,
         read(AmountItem), nl, 
@@ -75,7 +76,7 @@ writeSpecial :-
     (
         (Day =:= 69 ; Day =:= 190) ->
         write('**SPECIAL ITEM**'), nl,
-        write('- specialtiesPotion (instant Job levelup when consumed!)'), nl
+        write('- specialtiesPotion 1000 Gold (instant Job levelup when consumed!)'), nl
         ; !
     ).
 
