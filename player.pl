@@ -259,8 +259,8 @@ status :-
     maxEnergy(MaxE),
     (money(Money)),
     (energy(E)),
-    (hasilPanen(Panen)),
-    (ranchCapacity(Ranch)),
+    % (hasilPanen(Panen)),
+    % (ranchCapacity(Ranch)),
     luck(Kehokian),
     (levelPlayer(LVLP)),
     (expPlayer(XPplayer)),
@@ -300,7 +300,7 @@ status :-
 
     ),
 
-    format('Hasil Panen     : ~w', [Panen]),nl,
-    format('Ranch Capacity  : ~w', [Ranch]),nl,
+    % format('Hasil Panen     : ~w', [Panen]),nl,
+    % format('Ranch Capacity  : ~w', [Ranch]),nl,
     format('Luck            : ~w', [Kehokian]),nl,
     stat_quest, !.
