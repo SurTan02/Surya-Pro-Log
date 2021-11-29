@@ -62,7 +62,9 @@ ranch :-
     (\+(currCh = 0) -> write(CurrCh),write(' chicken'),nl),
     (\+(currSh = 0) -> write(CurrSh),write(' sheep'),nl),
     (\+(currCw = 0) -> write(CurrCw),write(' cow'),nl),nl,
+    
     write('What do you want to do?'),!,nl,
+    write('Example write \'chicken\' to get Egg!\n'),
     read(Choice),nl,!,
     (
      (Choice = chicken), getChickenProduce;
@@ -73,7 +75,7 @@ ranch :-
 getChickenProduce :-
     eggVal(A),
     (
-    A = 0 -> write('Your chciken has not produce any egg.'),nl,write('Please check again later.');
+    A = 0 -> write('Your chickenhas not produce any egg.'),nl,write('Please check again later.'), fail;
     
     write('Your chicken lays '), write(A), write(' eggs'),nl,write('You got '), write(A),write(' eggs!'),nl,
     write('You gain 50 Exp!\n'),    
@@ -92,7 +94,7 @@ getChickenProduce :-
 getSheepProduce :-
     woolVal(A),
     (
-    A = 0 -> write('Your sheep has not produce any wool.'),nl,write('Please check again later.');
+    A = 0 -> write('Your sheep has not produce any wool.'),nl,write('Please check again later.'), fail;
 
     write('Your sheep produce '), write(A), write(' wool'),nl,write('You got '), write(A),write(' wool!'),nl,
     write('You gain 50 Exp!\n'),    
@@ -110,7 +112,7 @@ getSheepProduce :-
 getCowProduce :-
     milkVal(A),
     (
-    A = 0 -> write('Your cow has not produce any milk.'),nl,write('Please check again later.');
+    A = 0 -> write('Your cow has not produce any milk.'),nl,write('Please check again later.'), fail;
 
     write('Your cow produce '), write(A), write(' milk'),nl,write('You got '), write(A),write(' milk!'),nl,
     write('You gain 50 Exp!\n'),    
