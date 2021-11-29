@@ -11,10 +11,7 @@ house :-
     asserta(isInHouse(1)), 
     write('Welcome Home Claire!'), nl,
     write('What do you want to do?'), nl,
-    write('\t- sleep'), nl,
-    write('\t- writeDiary'), nl,
-    write('\t- readDiary'), nl,
-    write('\t- exit (use exitHouse command)'), nl, !, fail.
+    write('\t- sleep'), nl, !, fail.
 
 sleep :-
     \+isInHouse(_),
@@ -48,7 +45,7 @@ sleep :-
     retract(isInHouse(_)), !.
 
 initPeriTidur :-
-    random(0,1000,X),
+    random(0,10,X),
     luck(Y),
     X < Y*10, !,
     asserta(isKetemuPeriTidur(1)), !.
